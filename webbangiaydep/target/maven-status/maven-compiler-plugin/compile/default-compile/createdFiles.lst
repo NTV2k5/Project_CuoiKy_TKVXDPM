@@ -1,4 +1,14 @@
-com\project\entity\Category.class
+persistence\ViewShoeList\ViewShoeListGateway.class
+Web\ViewShoeListControllerWeb.class
+business\ViewShoeList\ViewShoeListOutputBoundary.class
+business\entity\Brand.class
+presenters\ViewShoeList\ViewShoeListPresenter.class
+business\entity\Category.class
+presenters\ViewShoeList\ViewShoeListItem.class
+business\entity\Shoe.class
+business\ViewShoeList\ViewShoeListInputBoundary.class
+business\ViewShoeList\ViewShoeListUsecase.class
+persistence\ViewShoeList\ViewShoeListDTO.class
+persistence\ViewShoeList\viewShoeListDAO.class
+presenters\ViewShoeList\ViewShoeListViewModel.class
 com\project\App.class
-com\project\entity\Brand.class
-com\project\entity\Product.class

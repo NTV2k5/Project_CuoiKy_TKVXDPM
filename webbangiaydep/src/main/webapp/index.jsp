@@ -121,6 +121,23 @@
     .muted{color:var(--muted);font-size:13px}
     .card .actions{display:flex;gap:8px;margin-top:auto}
     .outline{background:transparent;border:1px solid #e6e9ef;padding:8px 10px;border-radius:10px;cursor:pointer}
+    /* nút xem danh sách */
+  .btn-view-all 
+  {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-view-all:hover 
+  {
+    background-color: #0056b3;
+  }
 
     /* Footer */
     footer{
@@ -275,6 +292,13 @@
           </div>
         </div>
       </div>
+      <!-- Nút xem danh sách giày -->
+    <div style="text-align:center; margin-top:24px;">
+      <a href="${pageContext.request.contextPath}/shoes" 
+         class="btn-view-all">
+         Xem danh sách giày
+      </a>
+    </div>
     </section>
 
     <!-- Footer -->
