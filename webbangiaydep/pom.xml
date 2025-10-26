@@ -42,14 +42,21 @@
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
             <version>2.0.0</version>
         </dependency>
+
+        <!-- JSTL Implementation (bắt buộc để JSP chạy được) -->
+        <dependency>
+          <groupId>org.glassfish.web</groupId>
+          <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+          <version>2.0.0</version>
+        </dependency>
+
         <!-- Junit Test -->
         <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <version>4.11</version>
           <scope>test</scope>
-        </dependency>
-
+        </dependency> 
   </dependencies>
 
   <build>
