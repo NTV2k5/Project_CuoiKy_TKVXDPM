@@ -4,160 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="index.css">
   <title>Web Bán Giày Đẹp</title>
-
-  <!-- Minimal, self-contained CSS để dễ thử nghiệm -->
-  <style>
-    :root{
-      --accent:#ff6b6b;
-      --dark:#222;
-      --muted:#777;
-      --card-bg:#fff;
-      --page-bg:#f5f7fb;
-      --max-width:1200px;
-      --radius:12px;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background:var(--page-bg);
-      color:var(--dark);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    /* Container */
-    .container{
-      width:96%;
-      max-width:var(--max-width);
-      margin:24px auto;
-    }
-
-    /* Header / Navbar */
-    header.site-header{
-      background:#fff;
-      padding:16px 0;
-      border-radius: var(--radius);
-      box-shadow: 0 6px 20px rgba(12,20,40,0.06);
-    }
-    .nav{
-      display:flex;
-      gap:16px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
-    .brand .logo{
-      width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff9a9e);
-      display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;
-      box-shadow:0 4px 12px rgba(255,107,107,0.18);
-    }
-    .brand h1{font-size:18px;margin:0}
-    .search{
-      flex:1;margin:0 20px;
-      display:flex;
-    }
-    .search input{
-      flex:1;padding:10px 14px;border-radius:10px 0 0 10px;border:1px solid #e3e7ee;
-      outline:none;
-      font-size:14px;
-    }
-    .search button{
-      padding:10px 14px;border-radius:0 10px 10px 0;border:1px solid #e3e7ee;background:var(--accent);color:#fff;font-weight:600;
-      cursor:pointer;
-    }
-    .nav-actions{display:flex;gap:12px;align-items:center}
-    .btn{
-      background:#fff;border:1px solid #e6e9ef;padding:8px 12px;border-radius:10px;cursor:pointer;
-    }
-
-    /* Hero */
-    .hero{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns:1fr 420px;
-      gap:18px;
-      align-items:center;
-    }
-    .hero-card{
-      background: linear-gradient(180deg,#fff, #fbfdff);
-      padding:28px;border-radius:14px;box-shadow:0 10px 30px rgba(12,20,40,0.05);
-    }
-    .hero-card h2{margin:0 0 8px;font-size:28px}
-    .hero-card p{color:var(--muted);margin:0 0 16px}
-    .cta{display:inline-block;padding:10px 18px;border-radius:10px;background:var(--accent);color:#fff;font-weight:700;text-decoration:none}
-
-    .promo{
-      background: linear-gradient(90deg,#ffecd2,#fcb69f);
-      border-radius:14px;padding:18px;display:flex;gap:12px;align-items:center;
-    }
-    .promo img{width:120px;height:80px;object-fit:cover;border-radius:8px}
-
-    /* Product grid */
-    .section{
-      margin-top:22px;
-    }
-    .section h3{margin:0 0 12px}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-    }
-    .card{
-      background:var(--card-bg);padding:12px;border-radius:12px;box-shadow:0 6px 18px rgba(12,20,40,0.04);
-      display:flex;flex-direction:column;gap:8px;
-    }
-    .thumb{width:100%;height:180px;border-radius:8px;overflow:hidden;background:#f2f4f8;display:flex;align-items:center;justify-content:center}
-    .thumb img{width:100%;height:100%;object-fit:cover}
-    .product-name{font-weight:700;font-size:15px}
-    .price-row{display:flex;justify-content:space-between;align-items:center}
-    .price{color:var(--accent);font-weight:800}
-    .muted{color:var(--muted);font-size:13px}
-    .card .actions{display:flex;gap:8px;margin-top:auto}
-    .outline{background:transparent;border:1px solid #e6e9ef;padding:8px 10px;border-radius:10px;cursor:pointer}
-    /* nút xem danh sách */
-  .btn-view-all 
-  {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    font-weight: 600;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-
-  .btn-view-all:hover 
-  {
-    background-color: #0056b3;
-  }
-
-    /* Footer */
-    footer{
-      margin-top:28px;padding:18px 0;color:var(--muted);
-      text-align:center;font-size:14px;
-    }
-
-    /* Responsive */
-    @media (max-width:1000px){
-      .hero{grid-template-columns:1fr}
-      .grid{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:600px){
-      .nav{flex-direction:column;align-items:flex-start;gap:12px}
-      .search{order:2;width:100%}
-      .grid{grid-template-columns:repeat(1,1fr)}
-      .thumb{height:220px}
-      .brand h1{font-size:16px}
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -173,8 +21,10 @@
         </div>
 
         <div class="search" role="search">
-          <input type="search" placeholder="Tìm giày, size, thương hiệu..." aria-label="Tìm sản phẩm" />
-          <button>🔍</button>
+          <form action="${pageContext.request.contextPath}/searchShoeList" method="get" style="display:flex; width:100%;">
+            <input type="search" name="keyword" placeholder="Tìm giày, size, thương hiệu..." aria-label="Tìm sản phẩm" />
+            <button type="submit">🔍</button>
+          </form>
         </div>
 
         <div class="nav-actions">
