@@ -1,0 +1,175 @@
+/* ========== RESET & TOÀN TRANG ========== */
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #fdfdfd, #eef1f5);
+    color: #333;
+}
+
+/* ========== TIÊU ĐỀ ========== */
+h2 {
+    text-align: center;
+    color: #111;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: #007bff;
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+/* ========== LƯỚI SẢN PHẨM ========== */
+ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+    padding: 0;
+    list-style: none;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* ========== THẺ SẢN PHẨM ========== */
+li {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+li:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* ========== LABEL MỚI / SALE ========== */
+li::before {
+    content: "MỚI";
+    position: absolute;
+    top: 15px;
+    left: -35px;
+    background: #ff4757;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 40px;
+    transform: rotate(-45deg);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ========== HÌNH ẢNH ========== */
+li img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+li:hover img {
+    transform: scale(1.07);
+    filter: brightness(1.05);
+}
+
+/* ========== TÊN SẢN PHẨM ========== */
+li h3 {
+    font-size: 18px;
+    color: #222;
+    font-weight: 600;
+    margin: 12px 0 8px;
+    line-height: 1.3;
+    height: 48px; /* cố định chiều cao tên */
+    overflow: hidden;
+}
+
+/* ========== GIÁ ========== */
+li p {
+    font-size: 17px;
+    color: #28a745;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+/* ========== NÚT HÀNH ĐỘNG ========== */
+button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    color: #fff;
+    padding: 10px 16px;
+    margin: 5px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0056b3, #003f8a);
+    transform: scale(1.07);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.35);
+}
+
+/* ========== FORM INLINE ========== */
+form {
+    display: inline-block;
+}
+
+/* ========== TRẠNG THÁI RỖNG ========== */
+p {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    margin-top: 40px;
+}
+
+/* ========== THANH TÌM KIẾM ========== */
+.search-bar {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.search-bar input[type="text"] {
+    width: 320px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.search-bar input[type="text"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0,123,255,0.4);
+    outline: none;
+}
+
+.search-bar button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    margin-left: 10px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.search-bar button:hover {
+    background: linear-gradient(135deg, #0056b3, #003f8a);
+}

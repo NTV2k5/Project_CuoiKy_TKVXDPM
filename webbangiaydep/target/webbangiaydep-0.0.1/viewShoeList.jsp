@@ -21,7 +21,7 @@
 
                         <h4><%= shoe.name %></h4>
                         <p>Giá: <strong><%= shoe.price %></strong></p>
-                        <button>Chi tiết</button>
+                        <a href="<%= request.getContextPath() %>/shoe-detail?id=<%= shoe.id %>" class="btn-detail">Chi tiết</a>
                         <button>Thêm vào giỏ</button>
                     </div>
         <%
@@ -29,7 +29,6 @@
             }
         %>
     </div>
-
     <div style="text-align:center;margin-top:20px;">
         <a href="<%= request.getContextPath() %>/index.jsp" class="btn-view-all">⬅ Quay lại trang chủ</a>
     </div>

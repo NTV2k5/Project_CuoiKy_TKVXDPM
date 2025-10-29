@@ -1,0 +1,93 @@
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* Căn giữa toàn trang */
+body {
+    background: #f8f9fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container chính giữa */
+.product-detail-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Khung bo góc tổng thể */
+.product-frame {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    max-width: 1000px;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card sản phẩm */
+.product-card {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+
+/* Ảnh */
+.product-image img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* Thông tin sản phẩm */
+.product-info {
+    flex: 1;
+}
+
+.product-title {
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.product-info p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Nút quay lại */
+.btn-primary {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Nếu không có sản phẩm */
+.not-found {
+    font-size: 18px;
+    color: red;
+    text-align: center;
+}
