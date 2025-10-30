@@ -17,7 +17,7 @@
                     presenters.ViewShoeList.ViewShoeListItem shoe = (presenters.ViewShoeList.ViewShoeListItem) obj;
         %>
                     <div class="card">
-                        <img src="<%= request.getContextPath() %>/image/<%= shoe.imageUrl %>" alt="<%= shoe.name %>" width="200" height="150">
+                        <img src="<%= request.getContextPath() %>/images/<%= shoe.imageUrl %>" alt="<%= shoe.name %>" width="200" height="150">
 
                         <h4><%= shoe.name %></h4>
                         <p>Giá: <strong><%= shoe.price %></strong></p>
