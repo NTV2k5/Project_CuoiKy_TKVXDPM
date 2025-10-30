@@ -16,7 +16,7 @@
     <div class="product-frame">
         <div class="product-card">
             <div class="product-image">
-                <img src="<%= request.getContextPath() %>/image/<%= shoe.imageUrl %>" alt="<%= shoe.name %>">
+                <img src="<%= request.getContextPath() %>/images/<%= shoe.imageUrl %>" alt="<%= shoe.name %>">
             </div>
             <div class="product-info">
                 <h2 class="product-title"><%= shoe.name %></h2>

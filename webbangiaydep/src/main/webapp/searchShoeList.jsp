@@ -18,7 +18,7 @@
             <% for (SearchShoeItem shoe : shoesList) { %>
                 <li style="margin-bottom:20px; list-style:none;">
                     <h3><%= shoe.name %></h3>
-                    <img src="image/<%= shoe.imageUrl %>" alt="<%= shoe.name %>" width="100"/>
+                    <img src="images/<%= shoe.imageUrl %>" alt="<%= shoe.name %>" width="100"/>
                     <p>Giá: <%= shoe.price %></p>
 
                     <a href="viewShoeDetail?id=<%= shoe.id %>">
