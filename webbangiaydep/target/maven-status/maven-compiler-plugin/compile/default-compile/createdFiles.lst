@@ -30,5 +30,7 @@ presenters\SearchShoe\SearchShoePresenter.class
 business\ViewShoeDetail\ViewShoeDetailInputBoundary.class
 presenters\ViewShoeDetail\ViewShoeDetailPresenter.class
 persistence\ViewShoeDetail\ViewShoeDetailDTO.class
+presenters\ViewShoeDetail\ViewShoeDetailItem$Variant.class
 presenters\ViewShoeList\ViewShoeListViewModel.class
+persistence\ViewShoeDetail\ViewShoeDetailDTO$Variant.class
 Web\SearchShoeListControllerWeb.class

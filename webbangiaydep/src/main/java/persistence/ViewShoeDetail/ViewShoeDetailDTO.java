@@ -1,6 +1,10 @@
+// persistence/ViewShoeDetail/ViewShoeDetailDTO.java
 package persistence.ViewShoeDetail;
 
-public class ViewShoeDetailDTO {
+import java.util.List;
+
+public class ViewShoeDetailDTO 
+{
     public int id;
     public String name;
     public double price;
@@ -8,6 +12,12 @@ public class ViewShoeDetailDTO {
     public String imageUrl;
     public String brand;
     public String category;
-    public String size;
-    public String color;
+    public List<Variant> variants;
+
+    public static class Variant {
+        public String size;
+        public String color;
+        public String hexCode;
+        public int stock;
+    }
 }

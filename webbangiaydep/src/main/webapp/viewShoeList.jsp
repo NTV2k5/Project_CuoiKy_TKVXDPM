@@ -22,7 +22,6 @@
                         <h4><%= shoe.name %></h4>
                         <p>Giá: <strong><%= shoe.price %></strong></p>
                         <a href="<%= request.getContextPath() %>/shoe-detail?id=<%= shoe.id %>" class="btn-detail">Chi tiết</a>
-                        <button>Thêm vào giỏ</button>
                     </div>
         <%
                 }

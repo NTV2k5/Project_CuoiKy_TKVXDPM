@@ -30,8 +30,6 @@ public class SearchShoeDAO implements SearchShoeGateway
                 p.price,
                 p.imageUrl,
                 p.brand,
-                p.size,
-                p.color,
                 c.name AS category_name
             FROM product p
             LEFT JOIN category c ON p.category_id = c.id
@@ -61,10 +59,7 @@ public class SearchShoeDAO implements SearchShoeGateway
                     dto.price = rs.getDouble("price");
                     dto.imageUrl = rs.getString("imageUrl");
                     dto.brand = rs.getString("brand");
-                    dto.size = rs.getString("size");
-                    dto.color = rs.getString("color");
                     dto.category = rs.getString("category_name"); // Tên danh mục
-
                     result.add(dto);
                 }
             }
