@@ -30,7 +30,7 @@
         <div class="nav-actions">
             <a class="btn" href="login.jsp">Đăng nhập</a>
             <a class="btn" href="register.jsp">Đăng ký</a>
-            <button class="btn">Giỏ (0)</button>
+            <a class="btn" href="${pageContext.request.contextPath}/viewShoeCart">Giỏ (0)</a>
         </div>
       </div>
     </header>

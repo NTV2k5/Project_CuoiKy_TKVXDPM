@@ -21,13 +21,12 @@
                     <img src="images/<%= shoe.imageUrl %>" alt="<%= shoe.name %>" width="100"/>
                     <p>Giá: <%= shoe.price %></p>
 
-                    <a href="viewShoeDetail?id=<%= shoe.id %>">
+                    <a href="<%= request.getContextPath() %>/shoe-detail?id=<%= shoe.id %>">
                         <button>Xem chi tiết</button>
                     </a>
 
                     <form action="addToCart" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="<%= shoe.id %>" />
-                        <button type="submit">Thêm vào giỏ hàng</button>
                     </form>
                 </li>
             <% } %>

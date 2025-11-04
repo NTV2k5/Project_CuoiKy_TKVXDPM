@@ -1,7 +1,9 @@
+// presenters/ViewShoeDetail/ViewShoeDetailItem.java
 package presenters.ViewShoeDetail;
 
-public class ViewShoeDetailItem 
-{
+import java.util.List;
+
+public class ViewShoeDetailItem {
     public int id;
     public String name;
     public double price;
@@ -9,7 +11,12 @@ public class ViewShoeDetailItem
     public String brand;
     public String category;
     public String description;
-    public String size;
-    public String color;
+    public List<Variant> variants;
+
+    public static class Variant {
+        public String size;
+        public String color;
+        public String hexCode;
+        public int stock;
+    }
 }
-    

@@ -9,6 +9,4 @@ public class SearchShoeDTO
     public String imageUrl;
     public String brand;
     public String category;
-    public String size;
-    public String color;
 }
