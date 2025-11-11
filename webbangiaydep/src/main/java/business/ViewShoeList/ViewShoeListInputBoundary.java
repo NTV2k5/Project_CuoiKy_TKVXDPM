@@ -7,5 +7,5 @@ import persistence.ViewShoeList.ViewShoeListDTO;
 
 public interface ViewShoeListInputBoundary 
 {
-    List<ViewShoeListDTO> getAllShoes() throws SQLException, ClassNotFoundException;
+    List<ViewShoeListDTO> execute() throws SQLException, ClassNotFoundException;
 }

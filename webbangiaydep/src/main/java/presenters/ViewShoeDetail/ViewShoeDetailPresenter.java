@@ -10,6 +10,10 @@ public class ViewShoeDetailPresenter implements ViewShoeDetailOutputBoundary
 {
     private ViewShoeDetailViewModel viewModel;
 
+    public ViewShoeDetailPresenter()
+    {
+
+    }
     public ViewShoeDetailPresenter(ViewShoeDetailViewModel viewModel) {
         this.viewModel = viewModel;
     }

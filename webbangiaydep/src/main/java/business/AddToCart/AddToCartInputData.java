@@ -1,32 +1,34 @@
-// package: business.AddToCart
+// business/AddToCart/AddToCartInputData.java
 package business.AddToCart;
 
-public class AddToCartInputData 
-{
-    private final int productId; //final: Giá trị này chỉ được gán 1 lần duy nhất – không bao giờ thay đổi(IMMUTABLE)
-    private final String size;
-    private final String color;
-    private final int quantity;
-    private final double price;
-    private final Integer userId;
-    private final String sessionId;
-
-    public AddToCartInputData(int productId, String size, String color, int quantity,
-                              double price, Integer userId, String sessionId) 
-    {
+public class AddToCartInputData {
+    public int userId;
+    public int productId;
+    public int variantId;
+    public int quantity;
+    public double price;
+    public AddToCartInputData(int userId, int productId, int variantId, int quantity, double price) {
+        this.userId = userId;
         this.productId = productId;
-        this.size = size;
-        this.color = color;
+        this.variantId = variantId;
         this.quantity = quantity;
         this.price = price;
-        this.userId = userId;
-        this.sessionId = sessionId;
     }
-    public int getProductId() { return productId; }
-    public String getSize() { return size; }
-    public String getColor() { return color; }
-    public int getQuantity() { return quantity; }
-    public double getPrice() { return price; }
-    public Integer getUserId() { return userId; }
-    public String getSessionId() { return sessionId; }
+    public int getUserId() {
+        return userId;
+    }
+    public int getProductId() {
+        return productId;
+    }
+    public int getVariantId() {
+        return variantId;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+    public double getPrice() {
+        return price;
+    }
+    
+    
 }

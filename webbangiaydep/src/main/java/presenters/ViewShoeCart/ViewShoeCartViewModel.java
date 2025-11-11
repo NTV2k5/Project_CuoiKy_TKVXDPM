@@ -3,17 +3,22 @@ package presenters.ViewShoeCart;
 import java.util.List;
 
 public class ViewShoeCartViewModel {
-    public List<ViewShoeCartItem> items;
-    public double totalAmount;
+    private List<ViewShoeCartItem> items;
+    private String message;
 
-    public void setItems(List<ViewShoeCartItem> items) 
-    {
-        this.items = items;
-        this.totalAmount = items.stream().mapToDouble(i -> i.totalPrice).sum();
+    public List<ViewShoeCartItem> getItems() { 
+        return items; 
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public void setItems(List<ViewShoeCartItem> items) { 
+        this.items = items; 
     }
-    
+
+    public String getMessage() { 
+        return message; 
+    }
+
+    public void setMessage(String message) { 
+        this.message = message; 
+    }
 }
