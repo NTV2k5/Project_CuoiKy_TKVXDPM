@@ -1,10 +1,11 @@
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeList\ShoeFactory.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\ViewShoeList\ViewShoeListItem.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartInputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\SearchShoe\SearchShoeUsecase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeDetail\ViewShoeDetailUseCase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeCart\ViewShoeCartInputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\AddToCart\AddToCartDAO.java
-C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartUsecase.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartUseCase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeList\ViewShoeListDTO.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeDetail\ViewShoeDetailInputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeList\ViewShoeListUsecase.java
@@ -17,6 +18,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\Vie
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartOutputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\SearchShoe\SearchShoeGateway.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeCart\ViewShoeCartInputData.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeDetail\ShoeDetaiFactory.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeList\ViewShoeListInputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\entity\CartItem.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\ViewShoeCart\ViewShoeCartViewModel.java
@@ -35,6 +37,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\Vie
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\entity\Shoe.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\SearchShoeListControllerWeb.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\SearchShoe\SearchShoeItem.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\entity\ShoeVariant.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\com\project\App.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartOutputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\ViewShoeDetail\ViewShoeDetailItem.java

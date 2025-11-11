@@ -1,5 +1,8 @@
 package business.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Shoe {
     private int id;                 // Mã sản phẩm
     private String name;            // Tên sản phẩm (vd: Giày Sneaker XYZ)
@@ -10,6 +13,7 @@ public class Shoe {
     private String brand;           // Thương hiệu
     private String category;        // Loại sản phẩm (vd: giày thể thao, sandal,...)
     private boolean isActive;       // Còn kinh doanh hay đã ngừng bán
+    private List<ShoeVariant> variants = new ArrayList<>();
 
     public Shoe()
     {
@@ -79,8 +83,20 @@ public class Shoe {
     public boolean isActive() {
         return isActive;
     }
-
     public void setActive(boolean active) {
         isActive = active;
+    }
+    public void addVariant(ShoeVariant variant) {
+        variants.add(variant);
+    }
+
+    public List<ShoeVariant> getVariants() {
+        return variants;
+    }
+
+    // Nghiệp vụ: tính tổng tồn kho
+    public int calculateTotalStock() 
+    {
+        return variants.stream().mapToInt(ShoeVariant::getStock).sum();
     }
 }

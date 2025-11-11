@@ -1,11 +1,9 @@
 package business.ViewShoeCart;
 
 public class ViewShoeCartInputData {
-    public String userId;
-    public String sessionId;
-    public ViewShoeCartInputData(String userId, String sessionId) 
+    public int userId;
+    public ViewShoeCartInputData(int userId) 
     {
         this.userId = userId;
-        this.sessionId = sessionId;
     }
 }

@@ -3,7 +3,8 @@ package presenters.ViewShoeDetail;
 
 import java.util.List;
 
-public class ViewShoeDetailItem {
+public class ViewShoeDetailItem 
+{
     public int id;
     public String name;
     public double price;

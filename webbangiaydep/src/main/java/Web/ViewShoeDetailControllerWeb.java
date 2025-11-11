@@ -1,51 +1,43 @@
-package Web;
+// package Web;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import jakarta.servlet.RequestDispatcher;
-import java.io.IOException;
+// import jakarta.servlet.ServletException;
+// import jakarta.servlet.annotation.WebServlet;
+// import jakarta.servlet.http.*;
+// import jakarta.servlet.RequestDispatcher;
+// import java.io.IOException;
+// import java.sql.SQLException;
 
-import business.ViewShoeDetail.ViewShoeDetailUseCase;
-import presenters.ViewShoeDetail.ViewShoeDetailPresenter;
-import presenters.ViewShoeDetail.ViewShoeDetailViewModel;
+// import business.ViewShoeDetail.ViewShoeDetailUseCase;
+// import presenters.ViewShoeDetail.ViewShoeDetailPresenter;
+// import presenters.ViewShoeDetail.ViewShoeDetailViewModel;
 
-@WebServlet("/shoe-detail")
-public class ViewShoeDetailControllerWeb extends HttpServlet {
+// @WebServlet("/shoe-detail")
+// public class ViewShoeDetailControllerWeb extends HttpServlet 
+// {
+//     @Override
+//     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+//     {
+//         String shoeIdParam = request.getParameter("id");
+//         if (shoeIdParam == null) {
+//             throw new ServletException("Thiếu mã sản phẩm (id).");
+//         }
+//         int shoeId = Integer.parseInt(shoeIdParam);
 
-    private ViewShoeDetailUseCase usecase;
-    private ViewShoeDetailPresenter presenter;
+//         // Gọi UseCase để lấy chi tiết sản phẩm
+//         ViewShoeDetailViewModel viewModel = new ViewShoeDetailViewModel();
+//         ViewShoeDetailPresenter presenter = new ViewShoeDetailPresenter(viewModel);
+//         ViewShoeDetailUseCase usecase = new ViewShoeDetailUseCase(presenter);
+//         try {
+//             usecase.execute(shoeId);
+//         } catch (ClassNotFoundException | SQLException e) {
+//             e.printStackTrace();
+//         }
 
-    @Override
-    public void init() throws ServletException {
-        // Khởi tạo ViewModel, Presenter và UseCase
-        ViewShoeDetailViewModel viewModel = new ViewShoeDetailViewModel();
-        presenter = new ViewShoeDetailPresenter(viewModel);
-        usecase = new ViewShoeDetailUseCase(presenter);
-    }
+//         // Gửi dữ liệu sang JSP
+//         request.setAttribute("shoeDetail", presenter.getViewModel().getShoeDetail());
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String shoeIdParam = request.getParameter("id");
-        if (shoeIdParam == null) {
-            throw new ServletException("Thiếu mã sản phẩm (id).");
-        }
-
-        int shoeId = Integer.parseInt(shoeIdParam);
-
-        // Gọi UseCase để lấy chi tiết sản phẩm
-        usecase.getShoeDetail(shoeId);
-
-        // Lấy ViewModel từ Presenter
-        ViewShoeDetailViewModel viewModel = presenter.getViewModel();
-
-        // Gửi dữ liệu sang JSP
-        request.setAttribute("shoeDetail", viewModel.getShoeDetail());
-
-        // Chuyển tiếp đến trang hiển thị
-        RequestDispatcher dispatcher = request.getRequestDispatcher("detailShoe.jsp");
-        dispatcher.forward(request, response);
-    }
-}
+//         // Chuyển tiếp đến trang hiển thị
+//         RequestDispatcher dispatcher = request.getRequestDispatcher("detailShoe.jsp");
+//         dispatcher.forward(request, response);
+//     }
+// }

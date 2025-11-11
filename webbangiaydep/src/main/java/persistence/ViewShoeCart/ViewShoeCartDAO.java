@@ -17,30 +17,29 @@ public class ViewShoeCartDAO implements ViewShoeCartGateway {
     }
 
     @Override
-    public List<ViewShoeCartDTO> getCartItems(String userId, String sessionId) {
+    public List<ViewShoeCartDTO> getCartItems(int userId) {
         List<ViewShoeCartDTO> items = new ArrayList<>();
 
         String sql = """
             SELECT 
-                ci.product_id,
-                p.name,
+                ci.product_id AS productId,
+                p.name AS productName,
                 p.imageUrl,
                 s.value AS size,
                 co.name AS color,
                 ci.quantity,
-                p.price
+                (p.price + IFNULL(pv.extra_price, 0)) AS price
             FROM cart c
             JOIN cart_item ci ON c.id = ci.cart_id
             JOIN product p ON ci.product_id = p.id
             LEFT JOIN product_variant pv ON ci.variant_id = pv.id
             LEFT JOIN size s ON pv.size_id = s.id
             LEFT JOIN color co ON pv.color_id = co.id
-            WHERE (c.user_id = ? AND c.user_id IS NOT NULL)
-               OR (c.session_id = ? AND c.user_id IS NULL)
+            WHERE c.user_id = ?
+            ORDER BY ci.added_at DESC;
             """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, userId);
-            ps.setString(2, sessionId);
+            ps.setInt(1, userId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

@@ -1,1 +1,13 @@
-com\project\AppTest.class
+TestViewShoeList\TestShoe.class
+TestViewShoeDetail\TestShoeVariant.class
+TestViewShoeDetail\TestViewshoeDetailUsecase$2.class
+TestViewShoeList\TestViewShoeListUseCase$FakeDAO.class
+TestViewShoeList\TestViewShoeListPresenter.class
+TestViewShoeList\TestViewShoeListUseCase.class
+TestViewShoeDetail\TestViewShoeDetailPresenter.class
+TestViewShoeDetail\TestViewShoeDetailDAO.class
+TestViewShoeDetail\TestViewshoeDetailUsecase.class
+TestViewShoeList\TestViewShoeListDAO.class
+TestViewShoeList\TestViewShoeListUseCase$1.class
+TestViewShoeDetail\TestViewshoeDetailUsecase$1.class
+TestViewShoeList\TestViewShoeListUseCase$FakeOutput.class
