@@ -3,34 +3,40 @@
 // import jakarta.servlet.ServletException;
 // import jakarta.servlet.annotation.WebServlet;
 // import jakarta.servlet.http.*;
-// import persistence.ViewShoeList.ViewShoeListGateway;
-// import persistence.ViewShoeList.viewShoeListDAO;
 // import jakarta.servlet.RequestDispatcher;
 // import java.io.IOException;
 // import java.sql.SQLException;
 
 // import presenters.ViewShoeList.ViewShoeListPresenter;
 // import presenters.ViewShoeList.ViewShoeListViewModel;
+// import business.ViewShoeList.ViewShoeListRepository;
 // import business.ViewShoeList.ViewShoeListUsecase;
+// import presenters.Reposity.ViewShoeListRepositoryImpl;
+// import persistence.ViewShoeList.viewShoeListDAO;
 
 // @WebServlet("/shoes")
 // public class ViewShoeListControllerWeb extends HttpServlet {
 //     @Override
-//     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+//     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//             throws ServletException, IOException {
+
 //         try {
-//             // Gọi Usecase xử lý nghiệp vụ
+//             // 1. Tạo presenter
 //             ViewShoeListPresenter presenter = new ViewShoeListPresenter();
-//             ViewShoeListGateway dao = new viewShoeListDAO();
+
+//             // 2. Tạo DAO và Repository
+//             viewShoeListDAO daoImpl = new viewShoeListDAO(); // class thực thi DAOInterface
+//             ViewShoeListRepository dao = new ViewShoeListRepositoryImpl(daoImpl);
+
+//             // 3. Tạo Usecase và thực thi
 //             ViewShoeListUsecase usecase = new ViewShoeListUsecase(presenter, dao);
 //             usecase.execute();
 
-//             // Lấy ViewModel từ presenter
+//             // 4. Lấy ViewModel và gửi sang JSP
 //             ViewShoeListViewModel viewModel = presenter.getViewModel();
-
-//             // Gửi dữ liệu ra JSP
 //             request.setAttribute("shoesList", viewModel.ShoeList);
 
-//             // Chuyển sang trang view
+//             // 5. Forward sang trang view
 //             RequestDispatcher dispatcher = request.getRequestDispatcher("viewShoeList.jsp");
 //             dispatcher.forward(request, response);
 

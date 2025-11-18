@@ -10,10 +10,11 @@ public class ShoeFactory
         Shoe shoe = new Shoe();
         shoe.setId(dto.id);
         shoe.setName(dto.name);
-        shoe.setPrice(dto.price);
+        shoe.setDescription(dto.description);
         shoe.setImageUrl(dto.imageUrl);
         shoe.setBrand(dto.brand);
         shoe.setCategory(dto.category);
+        shoe.setActive(dto.isActive);
         return shoe;
     }
 }

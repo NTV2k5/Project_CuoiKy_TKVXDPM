@@ -6,15 +6,13 @@ import java.util.List;
 
 import business.entity.Shoe;
 import persistence.ViewShoeList.ViewShoeListDTO;
-import persistence.ViewShoeList.ViewShoeListGateway;
-import persistence.ViewShoeList.viewShoeListDAO;
 
 public class ViewShoeListUsecase implements ViewShoeListInputBoundary 
 {
     private ViewShoeListOutputBoundary output;
-    private ViewShoeListGateway dao;
+    private ViewShoeListRepository dao;
 
-    public ViewShoeListUsecase(ViewShoeListOutputBoundary output, ViewShoeListGateway dao) {
+    public ViewShoeListUsecase(ViewShoeListOutputBoundary output, ViewShoeListRepository dao) {
         this.output = output;
         this.dao = dao;
     }
@@ -23,6 +21,9 @@ public class ViewShoeListUsecase implements ViewShoeListInputBoundary
     public List<ViewShoeListDTO> execute() throws SQLException, ClassNotFoundException {
         List<ViewShoeListDTO> listDTO = dao.getAllShoes();
         List<Shoe> shoes = convertToBusinessObject(listDTO);
+        shoes = shoes.stream()
+                 .filter(Shoe::isAvailableForSale)
+                 .toList();
         List<ViewShoeListDTO> dtoListUI = convertToDTO(shoes);
         output.presentShoeList(dtoListUI);
         return dtoListUI;
@@ -48,7 +49,6 @@ public class ViewShoeListUsecase implements ViewShoeListInputBoundary
 
             item.id = shoe.getId();
             item.name = shoe.getName();
-            item.price = shoe.getPrice();
             item.imageUrl = shoe.getImageUrl();
             item.brand = shoe.getBrand();
             itemList.add(item);

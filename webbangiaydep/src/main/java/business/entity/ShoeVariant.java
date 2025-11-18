@@ -1,19 +1,34 @@
 package business.entity;
 
-public class ShoeVariant 
-{
-    private String size;
-    private String color;
-    private String hexCode;
-    private int stock;
-    public ShoeVariant(String size, String color, String hexCode, int stock) 
-    {
+public class ShoeVariant {
+    private  int id;
+    private  int productId;
+    private  String size; 
+    private  String color;     
+    private  String hexCode;
+    private  double price;
+    private  int stock;
+
+    public ShoeVariant(int id, int productId, String size, String color, String hexCode, double price, int stock) {
+        this.id = id;
+        this.productId = productId;
         this.size = size;
         this.color = color;
         this.hexCode = hexCode;
+        this.price = price;
         this.stock = stock;
     }
+
+    // === Getters ===
     
+    public int getId() {
+        return id;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
     public String getSize() {
         return size;
     }
@@ -26,14 +41,28 @@ public class ShoeVariant
         return hexCode;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public int getStock() {
         return stock;
     }
-
-    // Nghiệp vụ: kiểm tra tồn kho
-    public boolean isInStock(int requestedQuantity) 
+    // === NGHIỆP VỤ ===
+    public String validateStock(int requestedQuantity) 
     {
-        return stock >= requestedQuantity;
+        if (requestedQuantity > stock) {
+            return "Chỉ còn " + stock + " sản phẩm trong kho";
+        }
+        return null;
     }
-    
+
+    public boolean isOutOfStock() {
+        if(stock <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -1,7 +1,9 @@
 // business/AddToCart/AddToCartOutputData.java
 package business.AddToCart;
 
-public class AddToCartOutputData {
+public class AddToCartOutputData 
+{
+    public boolean success;
     public String message;
-    public int cartItemCount;
+    public double totalPrice;
 }

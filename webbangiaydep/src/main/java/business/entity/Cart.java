@@ -1,60 +1,54 @@
 package business.entity;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Cart 
-{
-    private long id;
-    private Long userId; 
-    private String sessionId;
-    private List<CartItem> items;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+public class Cart {
+    private  int id;
+    private  int userId;
+    private  List<CartItem> items;
 
-    public Cart(long id, Long userId, String sessionId, List<CartItem> items, LocalDateTime createdAt,
-            LocalDateTime updatedAt) {
+    public Cart(int id, int userId) 
+    {
         this.id = id;
         this.userId = userId;
-        this.sessionId = sessionId;
-        this.items = items;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.items = new ArrayList<>();
     }
 
-    public long getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public int getUserId() { return userId; }
+    public List<CartItem> getItems() {return items;}
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public List<CartItem> getItems() {
-        return items;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-    public static void validateAddItem(CartItem newItem) 
+    public String addOrUpdateItem(int productId, int variantId, int quantity, double price) 
     {
-        if (newItem == null) {
-            throw new IllegalArgumentException("Item không được null.");
+        CartItem existing = findItem(productId, variantId);
+        if (existing != null) {
+            existing.setQuantity(existing.getQuantity() + quantity);
+        } else {
+            items.add(new CartItem(productId, variantId, quantity, price));
         }
-        newItem.validate();
+        return null;
     }
 
-    public int getTotalItemCount() {
+    public CartItem findItem(int productId, int variantId) {
+        for (CartItem item : items) {
+            if (item.getProductId() == productId && item.getVariantId() == variantId) 
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+    // NGHIỆP VỤ: Tính tổng số lượng
+    public int getTotalQuantity() 
+    {
         return items.stream().mapToInt(CartItem::getQuantity).sum();
     }
-}
 
+    // === TÍNH TỔNG TIỀN ===
+    public double getTotalPrice() {
+        return items.stream()
+                .mapToDouble(item -> item.getQuantity() * item.getPrice())
+                .sum();
+    }
+}

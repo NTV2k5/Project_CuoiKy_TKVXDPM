@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class viewShoeListDAO implements ViewShoeListGateway {
+public class viewShoeListDAO implements ViewShoeListDAOInterface {
 
     private Connection conn;
 

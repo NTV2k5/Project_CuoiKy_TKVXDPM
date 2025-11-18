@@ -11,7 +11,6 @@ public class ShoeDetaiFactory {
         shoe.setId(dto.id);
         shoe.setName(dto.name);
         shoe.setDescription(dto.description);
-        shoe.setPrice(dto.price);
         shoe.setImageUrl(dto.imageUrl);
         shoe.setBrand(dto.brand);
         shoe.setCategory(dto.category);
@@ -21,10 +20,13 @@ public class ShoeDetaiFactory {
             {
                 ShoeVariant variant = new ShoeVariant
                 (
-                        vDto.size,
-                        vDto.color,
-                        vDto.hexCode,
-                        vDto.stock
+                    vDto.id,
+                    shoe.getId(),
+                    vDto.size,
+                    vDto.color,
+                    vDto.hexCode,
+                    dto.price,
+                    vDto.stock
                 );
                 shoe.addVariant(variant);
             }

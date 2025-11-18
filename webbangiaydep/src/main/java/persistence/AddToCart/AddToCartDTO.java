@@ -1,24 +1,28 @@
 package persistence.AddToCart;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 public class AddToCartDTO 
 {
-    public Integer cartId;
-    public Integer userId;
-    public List<CartItem> items;
-    public int totalItemCount;
+    public int cartId;
+    public int userId;
+    public List<CartItemDTO> items;
 
-    public static class CartItem {
-        public int CartId;
+    public static class CartItemDTO 
+    {
         public int productId;
-        public int variantId;
-        public String name;
-        public String imageUrl;
-        public String color;
-        public String size;
+        public Integer variantId;
         public int quantity;
-        public double price;
-        public LocalDateTime addedAt;
+        public double unitPrice;
+
+        public String productName;
+        public String productImageUrl;
+        public String brand;
+        public String category;
+
+        public String size;
+        public String color;
+        public String hexCode;
+        public int stock;
     }
 }

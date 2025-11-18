@@ -2,10 +2,13 @@
 package persistence.AddToCart;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AddToCartDAO implements AddToCartGateway 
+import persistence.AddToCart.AddToCartDTO.CartItemDTO;
+
+public class AddToCartDAO implements AddToCartDAOInterFace
 {
-
     private final Connection conn;
 
     public AddToCartDAO() throws ClassNotFoundException, SQLException {
@@ -16,155 +19,197 @@ public class AddToCartDAO implements AddToCartGateway
         this.conn = DriverManager.getConnection(url, username, password);
     }
 
+    // ==================== LẤY GIỎ HÀNG ===================
     @Override
-    public AddToCartDTO addItemToCart(int userId, int productId, int variantId, int quantity) {
-        if (userId <= 0 || quantity <= 0 || productId <= 0) {
-            return null;
-        }
+        public AddToCartDTO findByUserId(int userId) 
+        {
+        String sql = """
+            SELECT 
+                c.id AS cart_id,
+                ci.product_id, 
+                ci.variant_id, 
+                ci.quantity,
+                ci.unit_price,
+                p.name AS product_name,
+                COALESCE(pi.url, p.imageUrl) AS product_image_url,
+                p.brand,
+                cat.name AS category_name,
+                s.value AS size_name,
+                col.name AS color_name,
+                col.hex_code,
+                pv.stock
+            FROM cart c
+            JOIN cart_item ci ON ci.cart_id = c.id
+            JOIN product p ON ci.product_id = p.id
+            LEFT JOIN product_variant pv ON ci.variant_id = pv.id
+            LEFT JOIN size s ON pv.size_id = s.id
+            LEFT JOIN color col ON pv.color_id = col.id
+            LEFT JOIN product_image pi ON p.id = pi.product_id AND pi.is_primary = 1
+            LEFT JOIN category cat ON p.category_id = cat.id
+            WHERE c.user_id = ?
+            """;
 
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int cartId = 0;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (!rs.next()) {
+                return null;
+            }
+
+            int cartId = rs.getInt("cart_id");
+            List<AddToCartDTO.CartItemDTO> items = new ArrayList<>();
+
+            do {
+                AddToCartDTO.CartItemDTO item = new AddToCartDTO.CartItemDTO();
+                item.productId = rs.getInt("product_id");
+                item.variantId = rs.getObject("variant_id") != null ? rs.getInt("variant_id") : null;
+                item.quantity = rs.getInt("quantity");
+                item.unitPrice = rs.getDouble("unit_price");
+
+                item.productName = rs.getString("product_name");
+                item.productImageUrl = rs.getString("product_image_url");
+                item.brand = rs.getString("brand");
+                item.category = rs.getString("category_name");
+
+                if (item.variantId != null) {
+                    item.size = rs.getString("size_name");
+                    item.color = rs.getString("color_name");
+                    item.hexCode = rs.getString("hex_code");
+                    item.stock = rs.getInt("stock");
+                }
+
+                items.add(item);
+            } while (rs.next());
+
+            AddToCartDTO dto = new AddToCartDTO();
+            dto.cartId = cartId;
+            dto.userId = userId;
+            dto.items = items;
+            return dto;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi lấy giỏ hàng", e);
+        }
+    }
+
+    // ==================== LƯU GIỎ HÀNG ====================
+    @Override
+    public void save(AddToCartDTO dto) {
+        String upsertCartSql = """
+            INSERT INTO cart (user_id) VALUES (?)
+            ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)
+            """;
+        String deleteItemsSql = "DELETE FROM cart_item WHERE cart_id = ?";
+        String upsertItemSql = """
+            INSERT INTO cart_item (cart_id, product_id, variant_id, quantity, unit_price)
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE 
+                quantity = VALUES(quantity),
+                unit_price = VALUES(unit_price)
+            """;
 
         try {
             conn.setAutoCommit(false);
 
-            // 1. Lấy hoặc tạo giỏ
-            ps = conn.prepareStatement("SELECT id FROM cart WHERE user_id = ? FOR UPDATE");
-            ps.setInt(1, userId);
-            rs = ps.executeQuery();
+            // 1. Lưu cart
+            int cartId;
+            try (PreparedStatement cartStmt = conn.prepareStatement(upsertCartSql, Statement.RETURN_GENERATED_KEYS)) {
+                cartStmt.setInt(1, dto.userId);
+                cartStmt.executeUpdate();
 
-            if (rs.next()) {
-                cartId = rs.getInt("id");
-            } else {
-                ps = conn.prepareStatement("INSERT INTO cart (user_id) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, userId);
-                ps.executeUpdate();
-                rs = ps.getGeneratedKeys();
-                rs.next();
-                cartId = rs.getInt(1);
+                ResultSet keys = cartStmt.getGeneratedKeys();
+                cartId = keys.next() ? keys.getInt(1) : dto.cartId;
             }
-            close(rs, ps);
 
-            // 2. Kiểm tra stock
-            if (variantId > 0) {
-                ps = conn.prepareStatement("SELECT stock FROM product_variant WHERE id = ? AND product_id = ?");
-                ps.setInt(1, variantId);
-                ps.setInt(2, productId);
-                rs = ps.executeQuery();
-                if (!rs.next() || rs.getInt("stock") < quantity) {
-                    conn.rollback();
-                    return null;
+            // 2. Xóa items cũ
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteItemsSql)) {
+                deleteStmt.setInt(1, cartId);
+                deleteStmt.executeUpdate();
+            }
+
+            // 3. Thêm items mới
+            try (PreparedStatement insertStmt = conn.prepareStatement(upsertItemSql)) {
+                for (AddToCartDTO.CartItemDTO item : dto.items) {
+                    insertStmt.setInt(1, cartId);
+                    insertStmt.setInt(2, item.productId);
+
+                    if (item.variantId != null && item.variantId > 0) {
+                        insertStmt.setInt(3, item.variantId);
+                    } else {
+                        insertStmt.setNull(3, Types.INTEGER);
+                    }
+
+                    insertStmt.setInt(4, item.quantity);
+                    insertStmt.setDouble(5, item.unitPrice);
+                    insertStmt.addBatch();
                 }
-            } else {
-                ps = conn.prepareStatement("SELECT 1 FROM product WHERE id = ? AND is_active = 1");
-                ps.setInt(1, productId);
-                rs = ps.executeQuery();
-                if (!rs.next()) {
-                    conn.rollback();
-                    return null;
-                }
+                insertStmt.executeBatch();
             }
-            close(rs, ps);
-
-            // 3. Upsert cart_item
-            String upsert = """
-                INSERT INTO cart_item (cart_id, product_id, variant_id, quantity)
-                VALUES (?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)
-                """;
-            ps = conn.prepareStatement(upsert);
-            ps.setInt(1, cartId);
-            ps.setInt(2, productId);
-            if (variantId > 0) {
-                ps.setInt(3, variantId);
-            } else {
-                ps.setNull(3, Types.INTEGER);
-            }
-            ps.setInt(4, quantity);
-            ps.executeUpdate();
 
             conn.commit();
-            return getCartByUserId(userId); // Trả DTO
-
-        } catch (Exception e) {
-            try { conn.rollback(); } catch (Exception ignored) {}
-            e.printStackTrace();
-            return null;
+        } catch (SQLException e) {
+            try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            throw new RuntimeException("Lỗi khi lưu giỏ hàng", e);
         } finally {
-            try { conn.setAutoCommit(true); } catch (Exception ignored) {}
-            close(rs, ps);
+            try { conn.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
     }
 
+    // ==================== LẤY VARIANT THEO ID → DÙNG CartItemDTO ====================
     @Override
-    public AddToCartDTO getCartByUserId(int userId) {
-        if (userId <= 0) return null;
-
-        String sqlCart = "SELECT id, user_id FROM cart WHERE user_id = ?";
-        String sqlItems = """
+    public AddToCartDTO.CartItemDTO getProductVariantById(int variantId) {
+        String sql = """
             SELECT 
-                ci.cart_id, ci.product_id, COALESCE(ci.variant_id, 0) AS variant_id,
-                p.name, p.imageUrl,
-                COALESCE(c.name, '') AS color, COALESCE(s.value, '') AS size,
-                ci.quantity, p.price, ci.added_at
-            FROM cart_item ci
-            JOIN product p ON ci.product_id = p.id
-            LEFT JOIN product_variant pv ON ci.variant_id = pv.id
-            LEFT JOIN color c ON pv.color_id = c.id
-            LEFT JOIN size s ON pv.size_id = s.id
-            WHERE ci.cart_id = ?
+                pv.id AS variant_id,
+                pv.product_id,
+                s.value AS size_value,
+                c.name AS color_name,
+                c.hex_code,
+                (p.price + COALESCE(pv.extra_price, 0)) AS final_price,
+                pv.stock,
+                p.name AS product_name,
+                COALESCE(pi.url, p.imageUrl) AS product_image_url,
+                p.brand,
+                cat.name AS category_name
+            FROM product_variant pv
+            JOIN product p ON pv.product_id = p.id
+            JOIN size s ON pv.size_id = s.id
+            JOIN color c ON pv.color_id = c.id
+            LEFT JOIN product_image pi ON p.id = pi.product_id AND pi.is_primary = 1
+            JOIN category cat ON p.category_id = cat.id
+            WHERE pv.id = ?
             """;
 
-        AddToCartDTO dto = new AddToCartDTO();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, variantId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    AddToCartDTO.CartItemDTO dto = new AddToCartDTO.CartItemDTO();
+                    dto.productId = rs.getInt("product_id");
+                    dto.variantId = rs.getInt("variant_id");
+                    dto.unitPrice = rs.getDouble("final_price");
+                    dto.quantity = 1;
 
-        try (PreparedStatement ps = conn.prepareStatement(sqlCart)) {
-            ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) return null;
+                    dto.productName = rs.getString("product_name");
+                    dto.productImageUrl = rs.getString("product_image_url");
+                    dto.brand = rs.getString("brand");
+                    dto.category = rs.getString("category_name");
 
-                dto.cartId = rs.getInt("id");
-                dto.userId = rs.getInt("user_id");
+                    dto.size = rs.getString("size_value");
+                    dto.color = rs.getString("color_name");
+                    dto.hexCode = rs.getString("hex_code");
+                    dto.stock = rs.getInt("stock");
 
-                try (PreparedStatement ps2 = conn.prepareStatement(sqlItems)) {
-                    ps2.setInt(1, dto.cartId);
-                    try (ResultSet rs2 = ps2.executeQuery()) {
-                        while (rs2.next()) {
-                            AddToCartDTO.CartItem item = new AddToCartDTO.CartItem();
-                            item.productId = rs2.getInt("product_id");
-                            item.variantId = rs2.getInt("variant_id");
-                            item.name = rs2.getString("name");
-                            item.imageUrl = rs2.getString("imageUrl");
-                            item.color = rs2.getString("color");
-                            item.size = rs2.getString("size");
-                            item.quantity = rs2.getInt("quantity");
-                            item.price = rs2.getDouble("price");
-                            item.addedAt = rs2.getTimestamp("added_at").toLocalDateTime();
-
-                            dto.items.add(item);
-                            dto.totalItemCount += item.quantity;
-                        }
-                    }
+                    return dto;
+                }
+                else
+                {
+                    throw new IllegalArgumentException("Sản phẩm không tồn tại");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return dto;
-    }
-
-    private void close(AutoCloseable... resources) {
-        for (var r : resources) {
-            if (r != null) {
-                try { r.close(); } catch (Exception ignored) {}
-            }
-        }
-    }
-
-    public void close() {
-        if (conn != null) {
-            try { conn.close(); } catch (Exception ignored) {}
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi lấy variant ID: " + variantId, e);
         }
     }
 }

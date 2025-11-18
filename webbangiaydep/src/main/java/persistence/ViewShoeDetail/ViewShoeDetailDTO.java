@@ -12,14 +12,17 @@ public class ViewShoeDetailDTO
     public String imageUrl;
     public String brand;
     public String category;
-    public boolean isActive;
+    public int isActive;
     public List<Variant> variants;
 
     public static class Variant 
     {
+        public int id;
         public String size;
         public String color;
         public String hexCode;
         public int stock;
+        public double price;
+        public boolean status;
     }
 }

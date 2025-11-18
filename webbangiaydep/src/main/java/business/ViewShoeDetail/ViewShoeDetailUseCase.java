@@ -1,8 +1,6 @@
 package business.ViewShoeDetail;
 
-import persistence.ViewShoeDetail.ViewShoeDetailDAO;
 import persistence.ViewShoeDetail.ViewShoeDetailDTO;
-import persistence.ViewShoeDetail.ViewShoeDetailGateway;
 
 import java.sql.SQLException;
 
@@ -11,18 +9,20 @@ import business.entity.Shoe;
 public class ViewShoeDetailUseCase implements ViewShoeDetailInputBoundary {
 
     private ViewShoeDetailOutputBoundary outputBoundary;
-    private ViewShoeDetailGateway dao;
+    private ViewShoeDetailRepository dao;
 
-    public ViewShoeDetailUseCase(ViewShoeDetailOutputBoundary outputBoundary) {
+    public ViewShoeDetailUseCase(ViewShoeDetailOutputBoundary outputBoundary, ViewShoeDetailRepository dao) {
         this.outputBoundary = outputBoundary;
+        this.dao = dao;
     }
 
     @Override
     public void execute(int shoeId) throws ClassNotFoundException, SQLException
     {
-        dao = new ViewShoeDetailDAO();
+        
         ViewShoeDetailDTO dtoDb = dao.getShoeById(shoeId);
         Shoe shoe = convertToBusinessObject(dtoDb);
+
         ViewShoeDetailDTO dtoItem = convertToDTO(shoe);
 
         outputBoundary.presentShoeDetail(dtoItem);
@@ -43,7 +43,6 @@ public class ViewShoeDetailUseCase implements ViewShoeDetailInputBoundary {
         dto.id = shoe.getId();
         dto.name = shoe.getName();
         dto.description = shoe.getDescription();
-        dto.price = shoe.getPrice();
         dto.imageUrl = shoe.getImageUrl();
         dto.brand = shoe.getBrand();
         dto.category = shoe.getCategory();
@@ -57,6 +56,7 @@ public class ViewShoeDetailUseCase implements ViewShoeDetailInputBoundary {
                 vDto.color = variant.getColor();
                 vDto.hexCode = variant.getHexCode();
                 vDto.stock = variant.getStock();
+                vDto.status = variant.isOutOfStock();
                 dto.variants.add(vDto);
             }
         }

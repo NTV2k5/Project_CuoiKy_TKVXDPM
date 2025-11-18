@@ -38,6 +38,14 @@ public class ViewShoeDetailPresenter implements ViewShoeDetailOutputBoundary
                 iv.color = v.color;
                 iv.hexCode = v.hexCode;
                 iv.stock = v.stock;
+                iv.outOfStock =v.status;
+                if(v.status)
+                {
+                    iv.status = "hết hàng";
+                }else
+                {
+                    iv.status = "Còn hàng";
+                }
                 itemVariants.add(iv);
             }
             item.variants = itemVariants;
