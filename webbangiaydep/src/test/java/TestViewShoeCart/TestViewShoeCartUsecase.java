@@ -1,53 +1,65 @@
 package TestViewShoeCart;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
+import business.ViewShoeCart.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.ViewShoeCart.ViewShoeCartDTO;
+import persistence.ViewShoeCart.ViewShoeCartInterface;
 
-import business.ViewShoeList.*;
-import persistence.ViewShoeList.ViewShoeListDTO;
+import java.util.Arrays;
+import java.util.List;
 
-public class TestViewShoeCartUsecase {
+import static org.mockito.Mockito.*;
 
-    private ViewShoeListRepository dao;
-    private ViewShoeListOutputBoundary output;
-    private ViewShoeListUsecase usecase;
+public class TestViewShoeCartUseCase {
+
+    private ViewShoeCartInterface mockGateway;
+    private ViewShoeCartOutputBoundary mockOutput;
+    private ViewShoeCartUsecase usecase;
 
     @BeforeEach
-    public void setup() 
-    {
-        dao = mock(ViewShoeListRepository.class); 
-        output = mock(ViewShoeListOutputBoundary.class);
-        usecase = new ViewShoeListUsecase(output, dao);
+    void setup() {
+        mockGateway = mock(ViewShoeCartInterface.class);
+        mockOutput = mock(ViewShoeCartOutputBoundary.class);
+        usecase = new ViewShoeCartUsecase(mockGateway, mockOutput);
     }
 
     @Test
-    public void testFilterAvailableShoes() throws SQLException, ClassNotFoundException {
-        // Chuẩn bị dữ liệu DTO
-        ViewShoeListDTO shoe1 = new ViewShoeListDTO();
-        shoe1.id = 1; shoe1.name = "Shoe1"; shoe1.brand = "Nike"; shoe1.imageUrl = "img1.jpg";
-        shoe1.isActive = 1;
+    void testViewCartSuccess() throws Exception {
 
-        ViewShoeListDTO shoe2 = new ViewShoeListDTO();
-        shoe2.id = 2; shoe2.name = "Shoe2"; shoe2.brand = "Adidas"; shoe2.imageUrl = "img2.jpg";
-        shoe2.isActive = 0; 
+        ViewShoeCartDTO dto1 = new ViewShoeCartDTO();
+        dto1.productId = 1;
+        dto1.variantId = 10;
+        dto1.quantity = 2;
+        dto1.price = 100.0;
+        dto1.productName = "Nike Air";
+        dto1.imageUrl = "img1.jpg";
+        dto1.color = "Red";
+        dto1.size = 42;
 
-        when(dao.getAllShoes()).thenReturn(Arrays.asList(shoe1, shoe2));
+        ViewShoeCartDTO dto2 = new ViewShoeCartDTO();
+        dto2.productId = 2;
+        dto2.variantId = 20;
+        dto2.quantity = 1;
+        dto2.price = 200.0;
+        dto2.productName = "Adidas Run";
+        dto2.imageUrl = "img2.jpg";
+        dto2.color = "Black";
+        dto2.size = 41;
+        
 
-        List<ViewShoeListDTO> result = usecase.execute();
+        List<ViewShoeCartDTO> mockData = Arrays.asList(dto1, dto2);
 
-        // Kiểm tra kết quả trả về chỉ chứa những đôi bán được
-        assertEquals(1, result.size());
-        assertEquals("Shoe1", result.get(0).name);
+        when(mockGateway.getCartItems(1)).thenReturn(mockData);
 
-        // Kiểm tra output được gọi với danh sách đã lọc
-        verify(output).presentShoeList(result);
+        ViewShoeCartInputData input = new ViewShoeCartInputData(1);
+
+        usecase.execute(input);
+
+        verify(mockOutput, times(1)).present(argThat(res ->
+                res.cartItems.size() == 2 &&
+                res.totalPriceCart == 400.0 &&
+                res.message == null
+        ));
     }
 }

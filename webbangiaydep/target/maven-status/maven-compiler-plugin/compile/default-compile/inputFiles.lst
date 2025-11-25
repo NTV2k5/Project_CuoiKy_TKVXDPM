@@ -7,6 +7,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddPr
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\DeleteCategoryControllerWeb.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\AddCategory\AddCategoryViewModel.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\DeleteOrder\DeleteOrderViewModel.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeDetail\ViewShoeDetailInterface.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartOutputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\SearchCategory\SearchCategoryInputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\DeleteCategory\DeleteCategoryOutputBoundary.java
@@ -17,8 +18,8 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\DeleteProd
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\UpdateOrderStatus\UpdateOrderStatusViewModel.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\Product\ProductDTO.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\Login\LoginOutputData.java
-C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeList\ViewShoeListGateway.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeList\viewShoeListDAO.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\Reposity\ViewShoeDetailRepositoryImpl.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\UpdateUser\UpdateUserUseCase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\RegisterControllerWeb.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\LogoutControllerWeb.java
@@ -48,7 +49,6 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\UpdateProd
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\DeleteUser\DeleteUserViewModel.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\ViewShoeList\ViewShoeListViewModel.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\ViewShoeDetailControllerWeb.java
-C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeDetail\ViewShoeDetailGateway.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeList\ShoeFactory.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddShoe\AddShoeOutputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartInputData.java
@@ -62,6 +62,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\Updat
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\SearchUser\SearchUserPresenter.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\UpdateProduct\UpdateProductViewModel.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddProduct\AddProductOutputData.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeList\ViewShoeListDAOInterface.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\entity\Order.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\DeleteOrder\DeleteOrderInputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeCart\ViewShoeCartOutputBoundary.java
@@ -80,6 +81,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\Creat
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\UpdateCategory\UpdateCategoryPresenter.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\CreateOrder\CreateOrderInputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\SearchUser\SearchUserViewModel.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\Reposity\ViewShoeListRepositoryImpl.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\UpdateCategory\UpdateCategoryViewModel.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\CreateOrder\CreateOrderInputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddToCart\AddToCartRepository.java
@@ -108,7 +110,6 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\Del
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\AddProductControllerWeb.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\SearchShoe\SearchShoeDTO.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddUser\AddUserInputData.java
-C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeCart\ViewShoeCartGateway.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\GetOrders\GetOrdersPresenter.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddCategory\AddCategoryOutputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\SearchProduct\SearchProductViewModel.java
@@ -167,6 +168,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\Sh
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeDetail\ViewShoeDetailDTO.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\UpdateProduct\UpdateProductPresenter.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\SearchProduct\SearchProductInputData.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeDetail\ViewShoeDetailRepository.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\SearchCategory\SearchCategoryViewModel.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\SearchShoe\SearchShoeOutputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\AddCategory\AddCategoryInputBoundary.java
@@ -181,6 +183,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\GetOr
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\SearchProductControllerWeb.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\UpdateProduct\UpdateProductOutputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\Product\ProductGateway.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeCart\ViewShoeCartInterface.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\UpdateCategory\UpdateCategoryUseCase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\persistence\ViewShoeDetail\ViewShoeDetailDAO.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\ViewShoeDetail\ViewShoeDetailPresenter.java
@@ -204,6 +207,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\Updat
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\GetOrders\GetOrdersOutputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\Login\LoginOutputBoundary.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\Web\CategoryListControllerWeb.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\ViewShoeList\ViewShoeListRepository.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\ViewShoeCart\ViewShoeCartPresenter.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\business\SearchCategory\SearchCategoryOutputData.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\main\java\presenters\SearchShoe\SearchShoeItem.java

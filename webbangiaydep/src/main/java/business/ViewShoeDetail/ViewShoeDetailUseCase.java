@@ -45,6 +45,7 @@ public class ViewShoeDetailUseCase implements ViewShoeDetailInputBoundary {
         dto.description = shoe.getDescription();
         dto.imageUrl = shoe.getImageUrl();
         dto.brand = shoe.getBrand();
+        dto.price = shoe.getPrice();
         dto.category = shoe.getCategory();
         dto.isActive = shoe.isActive();
 
@@ -52,6 +53,7 @@ public class ViewShoeDetailUseCase implements ViewShoeDetailInputBoundary {
             dto.variants = new java.util.ArrayList<>();
             for (var variant : shoe.getVariants()) {
                 ViewShoeDetailDTO.Variant vDto = new ViewShoeDetailDTO.Variant();
+                vDto.variantId = variant.getId();
                 vDto.size = variant.getSize();
                 vDto.color = variant.getColor();
                 vDto.hexCode = variant.getHexCode();

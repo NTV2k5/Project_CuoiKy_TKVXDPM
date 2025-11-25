@@ -26,7 +26,8 @@ public class viewShoeListDAO implements ViewShoeListDAOInterface {
                 p.price, 
                 p.imageUrl, 
                 p.brand, 
-                c.name AS category_name
+                c.name AS category_name,
+                p.is_active
             FROM product p
             JOIN category c ON p.category_id = c.id
             WHERE p.is_active = 1
@@ -44,6 +45,7 @@ public class viewShoeListDAO implements ViewShoeListDAOInterface {
                 dto.imageUrl = rs.getString("imageUrl");
                 dto.brand = rs.getString("brand");
                 dto.category = rs.getString("category_name");
+                dto.isActive = rs.getInt("is_active");
                 listDTO.add(dto);
             }
         }

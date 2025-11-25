@@ -18,6 +18,7 @@ public class AddToCartPresenter implements AddToCartOutputBoundary {
         if (outputData.success) {
             viewModel.message = "Thêm vào giỏ thành công!";
             viewModel.totalPrice = outputData.totalPrice;
+            viewModel.totalItems = outputData.totalItems;
         } else {
             viewModel.message = outputData.message;
         }

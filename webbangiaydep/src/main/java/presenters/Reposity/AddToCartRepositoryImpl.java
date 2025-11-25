@@ -14,7 +14,7 @@ public class AddToCartRepositoryImpl implements AddToCartRepository
     }
 
     @Override
-    public AddToCartDTO findByUserId(int userId) 
+    public AddToCartDTO findByUserId(Long userId) 
 	{
         return DAOInterface.findByUserId(userId);
     }

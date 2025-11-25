@@ -16,7 +16,7 @@ public class UserDAO implements UserGateway {
     public UserDAO() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/shoesdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-        this.conn = DriverManager.getConnection(url, "root", "12345678");
+        this.conn = DriverManager.getConnection(url, "root", "123456789");
     }
 
     @Override

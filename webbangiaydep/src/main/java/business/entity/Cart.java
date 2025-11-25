@@ -4,21 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-    private  int id;
-    private  int userId;
+    private  Long id;
+    private  Long userId;
     private  List<CartItem> items;
 
-    public Cart(int id, int userId) 
+    public Cart(Long id, Long userId) 
     {
         this.id = id;
         this.userId = userId;
         this.items = new ArrayList<>();
     }
 
-    public int getId() { return id; }
-    public int getUserId() { return userId; }
+    public Long getId() { return id; }
+    public Long getUserId() { return userId; }
     public List<CartItem> getItems() {return items;}
 
+    //Thêm vào giỏ hàng (gộp nếu đã tồn tại)
     public String addOrUpdateItem(int productId, int variantId, int quantity, double price) 
     {
         CartItem existing = findItem(productId, variantId);
@@ -29,7 +30,7 @@ public class Cart {
         }
         return null;
     }
-
+    //Tìm sản phẩm trong giỏ theo variant
     public CartItem findItem(int productId, int variantId) {
         for (CartItem item : items) {
             if (item.getProductId() == productId && item.getVariantId() == variantId) 
@@ -39,16 +40,22 @@ public class Cart {
         }
         return null;
     }
-    // NGHIỆP VỤ: Tính tổng số lượng
-    public int getTotalQuantity() 
-    {
-        return items.stream().mapToInt(CartItem::getQuantity).sum();
-    }
 
     // === TÍNH TỔNG TIỀN ===
     public double getTotalPrice() {
         return items.stream()
                 .mapToDouble(item -> item.getQuantity() * item.getPrice())
                 .sum();
+    }
+
+    public int getTotalItems() 
+    {
+        return items.size();
+    }
+    public int getTotalQuantity() 
+    {
+        return items.stream()
+                    .mapToInt(CartItem::getQuantity)
+                    .sum();
     }
 }

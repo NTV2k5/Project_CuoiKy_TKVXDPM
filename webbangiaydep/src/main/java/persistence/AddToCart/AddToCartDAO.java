@@ -21,7 +21,7 @@ public class AddToCartDAO implements AddToCartDAOInterFace
 
     // ==================== LẤY GIỎ HÀNG ===================
     @Override
-        public AddToCartDTO findByUserId(int userId) 
+        public AddToCartDTO findByUserId(Long userId) 
         {
         String sql = """
             SELECT 
@@ -50,20 +50,20 @@ public class AddToCartDAO implements AddToCartDAOInterFace
             """;
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
+            stmt.setLong(1, userId);
             ResultSet rs = stmt.executeQuery();
 
             if (!rs.next()) {
                 return null;
             }
 
-            int cartId = rs.getInt("cart_id");
+            Long cartId = rs.getLong("cart_id");
             List<AddToCartDTO.CartItemDTO> items = new ArrayList<>();
 
             do {
                 AddToCartDTO.CartItemDTO item = new AddToCartDTO.CartItemDTO();
                 item.productId = rs.getInt("product_id");
-                item.variantId = rs.getObject("variant_id") != null ? rs.getInt("variant_id") : null;
+                item.variantId = rs.getInt("variant_id");
                 item.quantity = rs.getInt("quantity");
                 item.unitPrice = rs.getDouble("unit_price");
 
@@ -71,9 +71,9 @@ public class AddToCartDAO implements AddToCartDAOInterFace
                 item.productImageUrl = rs.getString("product_image_url");
                 item.brand = rs.getString("brand");
                 item.category = rs.getString("category_name");
-
-                if (item.variantId != null) {
-                    item.size = rs.getString("size_name");
+                String sizeName = rs.getString("size_name");
+                if (sizeName != null) {
+                    item.size = sizeName;
                     item.color = rs.getString("color_name");
                     item.hexCode = rs.getString("hex_code");
                     item.stock = rs.getInt("stock");
@@ -94,68 +94,63 @@ public class AddToCartDAO implements AddToCartDAOInterFace
     }
 
     // ==================== LƯU GIỎ HÀNG ====================
-    @Override
+    
+   @Override
     public void save(AddToCartDTO dto) {
+        if (dto.userId == null || dto.userId <= 0) {
+            throw new IllegalArgumentException("userId không hợp lệ");
+        }
+
         String upsertCartSql = """
             INSERT INTO cart (user_id) VALUES (?)
             ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)
             """;
-        String deleteItemsSql = "DELETE FROM cart_item WHERE cart_id = ?";
+
         String upsertItemSql = """
             INSERT INTO cart_item (cart_id, product_id, variant_id, quantity, unit_price)
             VALUES (?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE 
-                quantity = VALUES(quantity),
+            ON DUPLICATE KEY UPDATE
+                quantity = quantity + VALUES(quantity),
                 unit_price = VALUES(unit_price)
             """;
 
         try {
             conn.setAutoCommit(false);
 
-            // 1. Lưu cart
-            int cartId;
-            try (PreparedStatement cartStmt = conn.prepareStatement(upsertCartSql, Statement.RETURN_GENERATED_KEYS)) {
-                cartStmt.setInt(1, dto.userId);
-                cartStmt.executeUpdate();
-
-                ResultSet keys = cartStmt.getGeneratedKeys();
-                cartId = keys.next() ? keys.getInt(1) : dto.cartId;
+            // 1. Lấy hoặc tạo cart_id
+            long cartId;
+            try (PreparedStatement ps = conn.prepareStatement(upsertCartSql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setLong(1, dto.userId);
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                cartId = rs.getLong(1);
             }
 
-            // 2. Xóa items cũ
-            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteItemsSql)) {
-                deleteStmt.setInt(1, cartId);
-                deleteStmt.executeUpdate();
-            }
+            // 2. UPSERT từng item (an toàn 100% với concurrent)
+            try (PreparedStatement ps = conn.prepareStatement(upsertItemSql)) {
+                for (CartItemDTO item : dto.items) {
+                    if (item.quantity <= 0) continue;
 
-            // 3. Thêm items mới
-            try (PreparedStatement insertStmt = conn.prepareStatement(upsertItemSql)) {
-                for (AddToCartDTO.CartItemDTO item : dto.items) {
-                    insertStmt.setInt(1, cartId);
-                    insertStmt.setInt(2, item.productId);
+                    ps.setLong(1, cartId);
+                    ps.setInt(2, item.productId);
+                    ps.setObject(3, item.variantId > 0 ? item.variantId : null);
+                    ps.setInt(4, item.quantity);      // số lượng THÊM vào
+                    ps.setDouble(5, item.unitPrice);
 
-                    if (item.variantId != null && item.variantId > 0) {
-                        insertStmt.setInt(3, item.variantId);
-                    } else {
-                        insertStmt.setNull(3, Types.INTEGER);
-                    }
-
-                    insertStmt.setInt(4, item.quantity);
-                    insertStmt.setDouble(5, item.unitPrice);
-                    insertStmt.addBatch();
+                    ps.addBatch();
                 }
-                insertStmt.executeBatch();
+                ps.executeBatch();
             }
 
             conn.commit();
         } catch (SQLException e) {
-            try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            try { conn.rollback(); } catch (Exception ex) { ex.printStackTrace(); }
             throw new RuntimeException("Lỗi khi lưu giỏ hàng", e);
         } finally {
-            try { conn.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
+            try { conn.setAutoCommit(true); } catch (Exception ex) { ex.printStackTrace(); }
         }
     }
-
     // ==================== LẤY VARIANT THEO ID → DÙNG CartItemDTO ====================
     @Override
     public AddToCartDTO.CartItemDTO getProductVariantById(int variantId) {

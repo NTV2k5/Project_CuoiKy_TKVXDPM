@@ -3,6 +3,6 @@ package persistence.ViewShoeCart;
 
 import java.util.List;
 
-public interface ViewShoeCartGateway {
+public interface ViewShoeCartInterface {
     List<ViewShoeCartDTO> getCartItems(int userId);
 }

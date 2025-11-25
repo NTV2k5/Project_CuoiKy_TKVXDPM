@@ -17,7 +17,7 @@ public class ViewShoeDetailDTO
 
     public static class Variant 
     {
-        public int id;
+        public int variantId;
         public String size;
         public String color;
         public String hexCode;

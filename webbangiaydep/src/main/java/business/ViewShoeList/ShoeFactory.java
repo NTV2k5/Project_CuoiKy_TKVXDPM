@@ -14,6 +14,7 @@ public class ShoeFactory
         shoe.setImageUrl(dto.imageUrl);
         shoe.setBrand(dto.brand);
         shoe.setCategory(dto.category);
+        shoe.setPrice(dto.price);
         shoe.setActive(dto.isActive);
         return shoe;
     }

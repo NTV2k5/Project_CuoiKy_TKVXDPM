@@ -3,7 +3,8 @@ package presenters.ViewShoeCart;
 import java.util.List;
 
 public class ViewShoeCartViewModel {
-    private List<ViewShoeCartItem> items;
+    public List<ViewShoeCartItem> items;
+
     private String message;
 
     public List<ViewShoeCartItem> getItems() { 

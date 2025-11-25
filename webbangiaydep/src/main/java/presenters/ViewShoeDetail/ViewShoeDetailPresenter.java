@@ -34,6 +34,7 @@ public class ViewShoeDetailPresenter implements ViewShoeDetailOutputBoundary
             List<ViewShoeDetailItem.Variant> itemVariants = new ArrayList<>();
             for (ViewShoeDetailDTO.Variant v : shoeDetail.variants) {
                 ViewShoeDetailItem.Variant iv = new ViewShoeDetailItem.Variant();
+                iv.variantId = v.variantId;
                 iv.size = v.size;
                 iv.color = v.color;
                 iv.hexCode = v.hexCode;

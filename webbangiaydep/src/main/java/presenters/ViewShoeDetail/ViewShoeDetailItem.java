@@ -16,6 +16,7 @@ public class ViewShoeDetailItem
     public List<Variant> variants;
 
     public static class Variant {
+        public int variantId;
         public String size;
         public String color;
         public String hexCode;

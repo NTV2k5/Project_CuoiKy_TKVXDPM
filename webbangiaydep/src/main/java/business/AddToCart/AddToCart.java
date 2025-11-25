@@ -32,10 +32,10 @@ public class AddToCart
             throw new IllegalArgumentException("Số lượng phải lớn hơn 0");
         }
     }
-    public static void checkInputUserId(int userID)
+    public static void checkInputUserId(Long userID)
     {
-        if(userID <= 0)
-        throw new IllegalArgumentException("Yêu Cấu Đăng nhập trước khi thêm vào giỏ hàng");
+        if(userID == null)
+        throw new IllegalArgumentException("Yêu Cầu Đăng nhập trước khi thêm vào giỏ hàng");
     }
 	public static void checkInputVariant(int variantID)
 	{

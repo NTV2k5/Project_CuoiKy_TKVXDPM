@@ -49,7 +49,6 @@ public class AddToCartUseCase implements AddToCartInputBoundary
                 {
                     throw new IllegalArgumentException(addError);
                 }
-    
             // 7. Lưu giỏ hàng
             // 7. Chuyển Entity → DTO để lưu
             AddToCartDTO updatedCartDTO = convertToCartDTO(cart);
@@ -64,6 +63,7 @@ public class AddToCartUseCase implements AddToCartInputBoundary
         // 8. Phản hồi thành công
         res.success = true;
         res.totalPrice = cart.getTotalPrice();
+        res.totalItems = cart.getTotalItems();
         presenter.present(res);
     }
 

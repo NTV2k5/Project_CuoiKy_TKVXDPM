@@ -1,49 +1,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%  
+    // LẤY DỮ LIỆU 1 LẦN DUY NHẤT – ĐÂY LÀ BIẾN CHÍNH!!!
+    presenters.ViewShoeDetail.ViewShoeDetailItem shoeDetailItem = 
+        (presenters.ViewShoeDetail.ViewShoeDetailItem) request.getAttribute("shoeDetail");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <%= 
-            ((presenters.ViewShoeDetail.ViewShoeDetailItem) request.getAttribute("shoeDetail")) != null ?
-            ((presenters.ViewShoeDetail.ViewShoeDetailItem) request.getAttribute("shoeDetail")).name :
-            "Sản phẩm"
-        %>
+        <%= shoeDetailItem != null ? shoeDetailItem.name : "Sản phẩm" %>
     </title>
     <link rel="stylesheet" href="detailShoe.css">
 </head>
 <body>
-<%  
-    presenters.ViewShoeDetail.ViewShoeDetailItem shoe =
-        (presenters.ViewShoeDetail.ViewShoeDetailItem) request.getAttribute("shoeDetail");
-%>
 <div class="container">
-    <% if (shoe != null) { %>
+    <% if (shoeDetailItem != null) { %>
         <div class="product-card">
             <!-- Ảnh -->
             <div class="product-image">
-                <img src="<%= request.getContextPath() %>/images/<%= shoe.imageUrl %>" 
-                     alt="<%= shoe.name %>">
+                <img src="<%= request.getContextPath() %>/images/<%= shoeDetailItem.imageUrl %>" 
+                     alt="<%= shoeDetailItem.name %>">
             </div>
 
             <!-- Thông tin -->
             <div class="product-info">
-                <h1 class="product-title"><%= shoe.name %></h1>
-                <p><strong>Hãng:</strong> <%= shoe.brand %></p>
-                <p><strong>Danh mục:</strong> <%= shoe.category %></p>
-                <p><strong>Giá:</strong> <span class="price"><%= shoe.price %> VND</span></p>
-                <p><strong>Mô tả:</strong> <%= shoe.description %></p>
+                <h1 class="product-title"><%= shoeDetailItem.name %></h1>
+                <p><strong>Hãng:</strong> <%= shoeDetailItem.brand %></p>
+                <p><strong>Danh mục:</strong> <%= shoeDetailItem.category %></p>
+                <p><strong>Giá:</strong> <span class="price"><%= shoeDetailItem.price %> VND</span></p>
+                <p><strong>Mô tả:</strong> <%= shoeDetailItem.description %></p>
 
                 <!-- SIZE & COLOR -->
-                <% if (shoe.variants != null && !shoe.variants.isEmpty()) { %>
+                <% if (shoeDetailItem.variants != null && !shoeDetailItem.variants.isEmpty()) { %>
                     <div class="variant-group">
                         <p><strong>Size:</strong></p>
                         <div class="size-options">
                             <%
                                 java.util.Set<String> displayedSizes = new java.util.HashSet<>();
                                 int sizeIndex = 0;
-                                for (presenters.ViewShoeDetail.ViewShoeDetailItem.Variant v : shoe.variants) {
+                                for (presenters.ViewShoeDetail.ViewShoeDetailItem.Variant v : shoeDetailItem.variants) {
                                     if (displayedSizes.add(v.size)) {
                                         boolean inStock = v.stock > 0;
                                         String sizeId = "size-" + sizeIndex++;
@@ -69,7 +66,7 @@
                             <%
                                 java.util.Set<String> displayedColors = new java.util.HashSet<>();
                                 int colorIndex = 0;
-                                for (presenters.ViewShoeDetail.ViewShoeDetailItem.Variant v : shoe.variants) {
+                                for (presenters.ViewShoeDetail.ViewShoeDetailItem.Variant v : shoeDetailItem.variants) {
                                     if (displayedColors.add(v.color)) {
                                         String colorId = "color-" + colorIndex++;
                             %>
@@ -105,8 +102,8 @@
                 <button type="button" 
                         class="btn-add-cart" 
                         id="addToCartBtn"
-                        data-productid="<%= shoe.id %>"        
-                        data-productprice="<%= shoe.price %>">
+                        data-productid="<%= shoeDetailItem.id %>"        
+                        data-productprice="<%= shoeDetailItem.price %>">
                     Thêm vào giỏ
                 </button>
             </div>
@@ -121,50 +118,55 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // === XỬ LÝ SIZE ===
+    // TẠO MẢNG BIẾN THỂ TỪ JSP – BÂY GIỜ DÙNG ĐÚNG shoeDetailItem
+    const variants = [
+        <% if (shoeDetailItem != null && shoeDetailItem.variants != null) { 
+            for (int i = 0; i < shoeDetailItem.variants.size(); i++) { 
+                presenters.ViewShoeDetail.ViewShoeDetailItem.Variant v = shoeDetailItem.variants.get(i); %>
+        {
+            variantId: <%= v.variantId %>,
+            size: "<%= v.size %>",
+            color: "<%= v.color %>",
+            stock: <%= v.stock %>
+        }<%= i < shoeDetailItem.variants.size()-1 ? "," : "" %>
+        <% } } %>
+    ];
+
+    console.log("Danh sách biến thể:", variants);
+
+    // XỬ LÝ SIZE, MÀU
     document.querySelectorAll('.size-btn').forEach(label => {
         const input = label.querySelector('input');
-        
         label.addEventListener('click', () => {
             if (input && input.disabled) return;
             document.querySelectorAll('.size-btn').forEach(l => l.classList.remove('selected'));
             label.classList.add('selected');
         });
-
-        // Nếu đã được chọn trước (load trang)
-        if (input && input.checked) {
-            label.classList.add('selected');
-        }
+        if (input && input.checked) label.classList.add('selected');
     });
 
-    // === XỬ LÝ MÀU ===
     document.querySelectorAll('.color-text-btn').forEach(label => {
         const input = label.querySelector('input');
-        
         label.addEventListener('click', () => {
             document.querySelectorAll('.color-text-btn').forEach(l => l.classList.remove('selected'));
             label.classList.add('selected');
         });
-
-        if (input && input.checked) {
-            label.classList.add('selected');
-        }
+        if (input && input.checked) label.classList.add('selected');
     });
 
-    // === TỰ ĐỘNG CHỌN ĐẦU TIÊN (nếu chưa chọn) ===
+    // Tự động chọn size/màu đầu tiên
     const firstSize = document.querySelector('.size-btn:not(.disabled) input');
     if (firstSize && !document.querySelector('input[name="size"]:checked')) {
         firstSize.checked = true;
         firstSize.closest('.size-btn').classList.add('selected');
     }
-
     const firstColor = document.querySelector('.color-text-btn input');
     if (firstColor && !document.querySelector('input[name="color"]:checked')) {
         firstColor.checked = true;
         firstColor.closest('.color-text-btn').classList.add('selected');
     }
 
-    // === CỘNG/TRỪ SỐ LƯỢNG ===
+    // Nút +/- số lượng
     document.querySelector('.qty-btn.plus').onclick = () => {
         const q = document.getElementById('quantity');
         q.value = parseInt(q.value) + 1;
@@ -174,50 +176,52 @@ document.addEventListener("DOMContentLoaded", function() {
         if (q.value > 1) q.value = parseInt(q.value) - 1;
     };
 
-    // === THÊM VÀO GIỎ HÀNG ===
-    const btn = document.getElementById('addToCartBtn');
-    if (btn) {
-        const productId = parseInt(btn.dataset.productid);
-        const productPrice = parseFloat(btn.dataset.productprice);
+    // THÊM VÀO GIỎ HÀNG
+    document.getElementById('addToCartBtn')?.addEventListener('click', function() {
+        const sizeRadio = document.querySelector('input[name="size"]:checked');
+        const colorRadio = document.querySelector('input[name="color"]:checked');
+        const quantity = parseInt(document.getElementById('quantity').value) || 1;
 
-        btn.addEventListener('click', function() {
-            const sizeRadio = document.querySelector('input[name="size"]:checked');
-            const colorRadio = document.querySelector('input[name="color"]:checked');
-            const quantity = document.getElementById('quantity').value;
+        if (!sizeRadio || !colorRadio) {
+            alert('Vui lòng chọn đầy đủ size và màu!');
+            return;
+        }
 
-            if (!sizeRadio) { alert('Vui lòng chọn size!'); return; }
-            if (!colorRadio) { alert('Vui lòng chọn màu!'); return; }
-            if (!quantity || quantity < 1) { alert('Số lượng phải ≥ 1'); return; }
+        const selected = variants.find(v => v.size === sizeRadio.value && v.color === colorRadio.value);
 
-            const data = new URLSearchParams({
-                productId: productId,
-                size: sizeRadio.value,
-                color: colorRadio.value,
-                quantity: quantity,
-                price: productPrice
-            });
+        if (!selected) {
+            alert('Không tìm thấy sản phẩm này trong kho!');
+            return;
+        }
+        if (selected.stock < quantity) {
+            alert(`Chỉ còn ${selected.stock} sản phẩm!`);
+            return;
+        }
 
-            fetch('<%= request.getContextPath() %>/AddToCart', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: data
-            })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    alert(result.message);
-                    const cartCount = document.getElementById('cartCount');
-                    if (cartCount) cartCount.textContent = result.totalItems;
-                } else {
-                    alert('Lỗi: ' + result.message);
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert('Lỗi kết nối server!');
-            });
-        });
-    }
+        const formData = new URLSearchParams();
+        formData.append('productId', '<%= shoeDetailItem.id %>');
+        formData.append('variantId', selected.variantId);
+        formData.append('quantity', quantity);
+
+        console.log("Đang gửi:", formData.toString());
+
+        fetch('<%= request.getContextPath() %>/AddToCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message || 'Thêm vào giỏ thành công!');
+                const cartCount = document.getElementById('cartCount');
+                if (cartCount) cartCount.textContent = data.totalItems;
+            } else {
+                alert('Lỗi: ' + data.message);
+            }
+        })
+        .catch(() => alert('Lỗi kết nối server!'));
+    });
 });
 </script>
 </body>

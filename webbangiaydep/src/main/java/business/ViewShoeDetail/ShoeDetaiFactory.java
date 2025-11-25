@@ -13,6 +13,7 @@ public class ShoeDetaiFactory {
         shoe.setDescription(dto.description);
         shoe.setImageUrl(dto.imageUrl);
         shoe.setBrand(dto.brand);
+        shoe.setPrice(dto.price);
         shoe.setCategory(dto.category);
         shoe.setActive(dto.isActive);
         if (dto.variants != null) {
@@ -20,7 +21,7 @@ public class ShoeDetaiFactory {
             {
                 ShoeVariant variant = new ShoeVariant
                 (
-                    vDto.id,
+                    vDto.variantId,
                     shoe.getId(),
                     vDto.size,
                     vDto.color,

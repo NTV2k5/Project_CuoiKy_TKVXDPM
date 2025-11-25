@@ -5,6 +5,7 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\AddPr
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\TestAddToCart\TestAddToCartUseCase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\DeleteOrderUseCaseTest.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\RegisterUseCaseTest.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\TestViewShoeDetail\TestViewShoeDetailUsecase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\AddCategoryUseCaseTest.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\SearchCategoryUseCaseTest.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\DeleteProductUseCaseTest.java
@@ -16,5 +17,6 @@ C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\GetOr
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\SearchUserUseCaseTest.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\CreateOrderUseCaseTest.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\UpdateOrderStatusUseCaseTest.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\ViewShoeDetailUseCase\TestViewShoeListUseCase.java
 C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\business\UpdateUserUseCaseTest.java
-C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\TestViewShoeCart\TestViewShoeCartUsecase.java
+C:\Users\Admin\Project_CuoiKy_TKVXDPM\webbangiaydep\src\test\java\TestViewShoeCart\TestViewShoeCartUseCase.java

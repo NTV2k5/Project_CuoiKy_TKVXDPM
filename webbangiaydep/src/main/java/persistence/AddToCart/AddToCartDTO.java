@@ -4,14 +4,14 @@ import java.util.List;
 
 public class AddToCartDTO 
 {
-    public int cartId;
-    public int userId;
+    public Long cartId;
+    public Long userId;
     public List<CartItemDTO> items;
 
     public static class CartItemDTO 
     {
         public int productId;
-        public Integer variantId;
+        public int variantId;
         public int quantity;
         public double unitPrice;
 
