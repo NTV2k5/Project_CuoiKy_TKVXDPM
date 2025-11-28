@@ -1,58 +1,75 @@
-// // Web/ViewShoeCartControllerWeb.java
-// package Web;
+package Web;
 
-// import jakarta.servlet.*;
-// import jakarta.servlet.annotation.WebServlet;
-// import jakarta.servlet.http.*;
-// import java.io.IOException;
-// import java.sql.SQLException;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+import persistence.ViewShoeCart.ViewShoeCartDAO;
+import persistence.ViewShoeCart.ViewShoeCartInterface;
 
-// import business.ViewShoeCart.ViewShoeCartInputBoundary;
-// import business.ViewShoeCart.ViewShoeCartInputData;
-// import business.ViewShoeCart.ViewShoeCartUsecase;
-// import presenters.ViewShoeCart.ViewShoeCartPresenter;
-// import presenters.ViewShoeCart.ViewShoeCartViewModel;
-// import persistence.ViewShoeCart.ViewShoeCartGateway;
-// import persistence.ViewShoeCart.ViewShoeCartDAO;
+import java.io.IOException;
+import java.sql.SQLException;
 
-// @WebServlet("/viewShoeCart")
-// public class ViewShoeCartControllerWeb extends HttpServlet {
+import business.ViewShoeCart.*;
+import presenters.ViewShoeCart.*;
 
-//     private ViewShoeCartInputBoundary viewShoeCartUseCase;
-//     private ViewShoeCartPresenter presenter;
+@WebServlet("/viewShoeCart")
+public class ViewShoeCartControllerWeb extends HttpServlet {
 
-//     @Override
-//     public void init() throws ServletException {  // ← Thêm throws ServletException
-//         try {
-//             ViewShoeCartViewModel viewModel = new ViewShoeCartViewModel();
-//             presenter = new ViewShoeCartPresenter(viewModel);
+    private ViewShoeCartInputBoundary viewShoeCartUseCase;
+    private ViewShoeCartPresenter presenter;
 
-//             // ← Bắt ngoại lệ từ constructor DAO
-//             ViewShoeCartGateway gateway = new ViewShoeCartDAO();
+    @Override
+    public void init() throws ServletException {
+        try {
+            ViewShoeCartViewModel viewModel = new ViewShoeCartViewModel();
+            presenter = new ViewShoeCartPresenter(viewModel);
 
-//             viewShoeCartUseCase = new ViewShoeCartUsecase(gateway, presenter);
+            // DAO ném ngoại lệ → bắt ở đây
+            ViewShoeCartInterface gateway = new ViewShoeCartDAO();
+            viewShoeCartUseCase = new ViewShoeCartUsecase(gateway, presenter);
 
-//         } catch (ClassNotFoundException | SQLException e) {
-//             // Ghi log + ném ServletException để Servlet Container biết
-//             throw new ServletException("Không thể khởi tạo ViewShoeCartDAO: " + e.getMessage(), e);
-//         }
-//     }
-    
-//     @Override
-//     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//             throws ServletException, IOException {
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new ServletException("Khởi tạo ViewShoeCart thất bại - Không kết nối được CSDL", e);
+        }
+    }
 
-//         String userId = (String) request.getSession().getAttribute("userId");
-//         // ← Không gán "guest" → để null nếu chưa đăng nhập
-//         String sessionId = request.getSession().getId();
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-//         ViewShoeCartInputData inputData = new ViewShoeCartInputData(userId, sessionId);
-//         viewShoeCartUseCase.execute(inputData);
+        HttpSession session = request.getSession();
+        Object userIdObj = session.getAttribute("userId");
 
-//         ViewShoeCartViewModel viewModel = presenter.getViewModel();
-//         request.setAttribute("cartItems", viewModel.items);
-//         request.setAttribute("totalAmount", viewModel.getTotalAmount());
+        Long userId = null;
 
-//         request.getRequestDispatcher("Cart.jsp").forward(request, response);
-//     }
-// }
+        // Xử lý userId đúng mọi trường hợp bạn từng set (String, Integer, Long)
+        if (userIdObj != null) {
+            if (userIdObj instanceof Number) {
+                userId = ((Number) userIdObj).longValue();
+            } else if (userIdObj instanceof String) {
+                try {
+                    userId = Long.parseLong((String) userIdObj);
+                } catch (NumberFormatException e) {
+                    // userId không hợp lệ → coi như chưa đăng nhập
+                    userId = null;
+                }
+            }
+        }
+
+        // Nếu chưa đăng nhập → vẫn cho xem giỏ (có thể rỗng)
+        ViewShoeCartInputData inputData = new ViewShoeCartInputData(userId != null ? userId.intValue() : 0);
+        // Hoặc tốt hơn: sửa InputData nhận Long → nhưng tạm thời giữ int như hiện tại
+
+        viewShoeCartUseCase.execute(inputData);
+
+        ViewShoeCartViewModel viewModel = presenter.getViewModel();
+
+        // Gửi dữ liệu sang JSP
+        request.setAttribute("cartItems", viewModel.items);
+        // request.setAttribute("totalAmount", viewModel.getTotalAmount());
+        request.setAttribute("message", viewModel.getMessage());
+
+        // Forward đến trang giỏ hàng
+        request.getRequestDispatcher("/Cart.jsp").forward(request, response);
+    }
+}

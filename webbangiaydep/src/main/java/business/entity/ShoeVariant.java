@@ -1,6 +1,6 @@
 package business.entity;
 
-public class ShoeVariant {
+public  class ShoeVariant {
     private  int id;
     private  int productId;
     private  String size; 
@@ -49,6 +49,7 @@ public class ShoeVariant {
         return stock;
     }
     // === NGHIỆP VỤ ===
+    //nghiệp vụ kiểm tra có đủ số lượng với yêu cầu khách hàng không
     public String validateStock(int requestedQuantity) 
     {
         if (requestedQuantity > stock) {
@@ -56,7 +57,7 @@ public class ShoeVariant {
         }
         return null;
     }
-
+    // nghiệp vụ kiểm tra đã hết hàng chưa
     public boolean isOutOfStock() {
         if(stock <= 0)
         {
@@ -64,5 +65,4 @@ public class ShoeVariant {
         }
         return false;
     }
-
 }

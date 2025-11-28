@@ -1,12 +1,13 @@
 Web\OrderListControllerWeb.class
 business\DeleteUser\DeleteUserUseCase.class
 business\DeleteCategory\DeleteCategoryUseCase.class
-business\AddToCart\AddToCartViewDTO.class
+presenters\Reposity\ViewShoeListRepositoryImpl.class
 business\DeleteProduct\DeleteProductOutputData.class
 persistence\SearchShoe\SearchShoeGateway.class
 presenters\ViewShoeList\ViewShoeListItem.class
 business\entity\Order.class
 business\UpdateCategory\UpdateCategoryInputData.class
+presenters\Reposity\ViewShoeDetailRepositoryImpl.class
 persistence\Shoe\ShoeDTO.class
 business\UpdateUser\UpdateUserOutputData.class
 presenters\AddUser\AddUserPresenter.class
@@ -25,9 +26,7 @@ presenters\ViewShoeCart\ViewShoeCartPresenter.class
 business\SearchProduct\SearchProductInputData.class
 Web\LoginControllerWeb.class
 Web\LogoutControllerWeb.class
-business\AddToCart\AddToCartViewDTO$CartItemViewDTO.class
 persistence\SearchShoe\SearchShoeDTO.class
-persistence\ViewShoeList\ViewShoeListGateway.class
 business\DeleteUser\DeleteUserOutputBoundary.class
 persistence\User\UserDAO.class
 business\ViewShoeList\ViewShoeListOutputBoundary.class
@@ -42,6 +41,7 @@ business\Register\RegisterOutputBoundary.class
 business\UpdateOrderStatus\UpdateOrderStatusInputBoundary.class
 business\UpdateProduct\UpdateProductOutputData.class
 business\SearchCategory\SearchCategoryInputData.class
+business\ViewShoeDetail\ViewShoeDetailRepository.class
 business\AddToCart\AddToCartOutputBoundary.class
 Web\AddUserControllerWeb.class
 business\ViewShoeDetail\ViewShoeDetailInputBoundary.class
@@ -69,6 +69,7 @@ persistence\ViewShoeList\ViewShoeListDTO.class
 business\AddUser\AddUserInputData.class
 business\Login\LoginInputData.class
 presenters\Register\RegisterPresenter.class
+Web\ViewShoeDetailControllerWeb.class
 presenters\AddToCart\AddToCartViewModel.class
 presenters\UpdateProduct\UpdateProductPresenter.class
 business\AddShoe\AddShoeInputBoundary.class
@@ -76,10 +77,12 @@ business\DeleteCategory\DeleteCategoryOutputData.class
 business\ViewShoeCart\ViewShoeCartOutputData.class
 business\ViewShoeDetail\ViewShoeDetailOutputBoundary.class
 presenters\GetOrders\GetOrdersPresenter.class
+business\ViewShoeCart\ViewShoeCartUsecase.class
 business\Login\LoginOutputData.class
 persistence\Category\CategoryGateway.class
 business\UpdateOrderStatus\UpdateOrderStatusUseCase.class
 persistence\ViewShoeCart\ViewShoeCartDTO.class
+persistence\ViewShoeList\ViewShoeListDAOInterface.class
 business\UpdateProduct\UpdateProductOutputBoundary.class
 business\AddToCart\AddToCartInputData.class
 business\DeleteUser\DeleteUserInputBoundary.class
@@ -142,7 +145,6 @@ Web\SearchUserControllerWeb.class
 business\AddShoe\AddShoeOutputBoundary.class
 presenters\Register\RegisterViewModel.class
 Web\UpdateProductControllerWeb.class
-persistence\ViewShoeCart\ViewShoeCartGateway.class
 Web\ViewUserControllerWeb.class
 persistence\Category\CategoryDTO.class
 business\Register\RegisterOutputData.class
@@ -156,9 +158,10 @@ presenters\AddCategory\AddCategoryViewModel.class
 business\DeleteUser\DeleteUserInputData.class
 persistence\Order\OrderDAO.class
 business\CreateOrder\CreateOrderUseCase.class
-persistence\ViewShoeDetail\ViewShoeDetailGateway.class
+business\ViewShoeList\ViewShoeListRepository.class
 presenters\SearchProduct\SearchProductViewModel.class
 Web\ViewShoeListControllerWeb.class
+persistence\ViewShoeCart\ViewShoeCartInterface.class
 business\AddUser\AddUserUseCase.class
 business\entity\CartItem.class
 business\entity\Category.class
@@ -166,6 +169,7 @@ persistence\AddToCart\AddToCartDAO.class
 business\DeleteProduct\DeleteProductUseCase.class
 presenters\DeleteProduct\DeleteProductPresenter.class
 business\CreateOrder\CreateOrderOutputData.class
+business\ViewShoeDetail\ViewShoeDetailUseCase.class
 business\DeleteProduct\DeleteProductInputBoundary.class
 business\CreateOrder\CreateOrderInputData$OrderItemInput.class
 Web\DeleteCategoryControllerWeb.class
@@ -187,9 +191,12 @@ business\SearchCategory\SearchCategoryInputBoundary.class
 persistence\ViewShoeList\viewShoeListDAO.class
 business\SearchCategory\SearchCategoryOutputBoundary.class
 business\SearchProduct\SearchProductOutputBoundary.class
+persistence\ViewShoeDetail\ViewShoeDetailInterface.class
 business\AddToCart\AddToCartInputBoundary.class
 persistence\SearchShoe\SearchShoeDAO.class
 presenters\ViewShoeDetail\ViewShoeDetailViewModel.class
+Web\ViewShoeCartControllerWeb.class
+Web\AddToCartControllerWeb.class
 persistence\Order\OrderGateway.class
 business\AddToCart\AddToCartUseCase.class
 business\SearchUser\SearchUserInputData.class
@@ -208,6 +215,7 @@ presenters\Login\LoginViewModel.class
 persistence\AddToCart\AddToCartDTO.class
 presenters\SearchUser\SearchUserPresenter.class
 Web\UpdateUserControllerWeb.class
+business\ViewShoeDetail\ShoeDetaiFactory.class
 Web\CreateOrderControllerWeb.class
 business\entity\OrderItem.class
 business\entity\Shoe.class

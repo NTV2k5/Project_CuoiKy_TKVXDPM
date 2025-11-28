@@ -27,6 +27,7 @@ public class ViewShoeDetailDAO implements ViewShoeDetailInterface
                 s.value AS size_value,
                 co.name AS color_name,
                 co.hex_code,
+                pv.id AS variant_id,
                 pv.stock
             FROM product p
             LEFT JOIN category c ON p.category_id = c.id
@@ -58,6 +59,7 @@ public class ViewShoeDetailDAO implements ViewShoeDetailInterface
                     // Chỉ thêm nếu có variant
                     if (rs.getObject("size_value") != null) {
                         ViewShoeDetailDTO.Variant v = new ViewShoeDetailDTO.Variant();
+                        v.variantId = rs.getInt("variant_id");
                         v.size = rs.getString("size_value");
                         v.color = rs.getString("color_name");
                         v.hexCode = rs.getString("hex_code");

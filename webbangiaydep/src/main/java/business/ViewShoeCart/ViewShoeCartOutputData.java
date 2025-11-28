@@ -7,5 +7,6 @@ import persistence.ViewShoeCart.ViewShoeCartDTO;
 public class ViewShoeCartOutputData 
 {
     public List<ViewShoeCartDTO> cartItems;
+    public double totalPriceCart;
     public String message;
 }

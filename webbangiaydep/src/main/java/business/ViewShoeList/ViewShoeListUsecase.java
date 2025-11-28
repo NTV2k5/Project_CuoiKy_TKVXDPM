@@ -49,6 +49,7 @@ public class ViewShoeListUsecase implements ViewShoeListInputBoundary
 
             item.id = shoe.getId();
             item.name = shoe.getName();
+            item.price = shoe.getPrice();
             item.imageUrl = shoe.getImageUrl();
             item.brand = shoe.getBrand();
             itemList.add(item);

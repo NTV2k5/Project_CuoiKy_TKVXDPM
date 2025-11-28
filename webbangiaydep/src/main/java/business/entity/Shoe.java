@@ -11,6 +11,7 @@ public class Shoe
     private  String imageUrl;
     private  String brand;
     private  String category;
+    private double price;
     private  int isActive;
     private  List<ShoeVariant> variants = new ArrayList<>();
 
@@ -40,7 +41,7 @@ public class Shoe
     public String getCategory() { return category; }
     public int isActive() { return isActive; }
     public List<ShoeVariant> getVariants() { return new ArrayList<>(variants); }
-    
+    public double getPrice() {return price;}
 
     public void setId(int id) {
         this.id = id;
@@ -78,12 +79,13 @@ public class Shoe
         variants.add(variant);
     }
 
-    public int calculateTotalStock() {
-        return variants.stream().mapToInt(ShoeVariant::getStock).sum();
+    public void setPrice(double price) {
+        this.price = price;
     }
-    
+
+    //nghiệp vụ kiểm tra sản phẩm có đang kinh doanh không
     public boolean isAvailableForSale() 
     {
-        return this.isActive == 1;
+        return isActive == 1;
     }
 }

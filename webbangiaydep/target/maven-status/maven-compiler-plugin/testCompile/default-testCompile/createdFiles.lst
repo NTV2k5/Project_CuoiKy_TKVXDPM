@@ -2,6 +2,7 @@ business\AddCategoryUseCaseTest.class
 business\SearchCategoryUseCaseTest.class
 business\DeleteUserUseCaseTest.class
 business\UpdateCategoryUseCaseTest.class
+TestViewShoeDetail\TestViewShoeDetailUsecase.class
 business\CreateOrderUseCaseTest.class
 business\DeleteProductUseCaseTest.class
 business\SearchUserUseCaseTest.class
@@ -9,13 +10,15 @@ TestAddToCart\TestAddToCartUseCase$MockRepository.class
 business\GetOrdersUseCaseTest.class
 business\RegisterUseCaseTest.class
 business\SearchProductUseCaseTest.class
-TestViewShoeCart\TestViewShoeCartUsecase.class
 TestAddToCart\TestAddToCartUseCase.class
+TestViewShoeDetail\TestViewShoeDetailUsecase$1.class
 business\LoginUseCaseTest.class
 business\AddUserUseCaseTest.class
 business\UpdateProductUseCaseTest.class
 business\UpdateUserUseCaseTest.class
 business\DeleteOrderUseCaseTest.class
+TestViewShoeCart\TestViewShoeCartUseCase.class
+ViewShoeDetailUseCase\TestViewShoeListUseCase.class
 business\DeleteCategoryUseCaseTest.class
 business\UpdateOrderStatusUseCaseTest.class
 business\AddProductUseCaseTest.class

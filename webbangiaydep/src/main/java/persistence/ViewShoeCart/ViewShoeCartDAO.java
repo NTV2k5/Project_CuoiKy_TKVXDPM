@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewShoeCartDAO implements ViewShoeCartGateway {
+public class ViewShoeCartDAO implements ViewShoeCartInterface {
 
     private Connection conn;
     public ViewShoeCartDAO() throws ClassNotFoundException, SQLException {
@@ -17,12 +17,14 @@ public class ViewShoeCartDAO implements ViewShoeCartGateway {
     }
 
     @Override
-    public List<ViewShoeCartDTO> getCartItems(int userId) {
+    public List<ViewShoeCartDTO> getCartItems(int userId) 
+    {
         List<ViewShoeCartDTO> items = new ArrayList<>();
 
         String sql = """
             SELECT 
                 ci.product_id AS productId,
+                ci.variant_id AS variantId,
                 p.name AS productName,
                 p.imageUrl,
                 s.value AS size,
@@ -44,10 +46,11 @@ public class ViewShoeCartDAO implements ViewShoeCartGateway {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     ViewShoeCartDTO dto = new ViewShoeCartDTO();
-                    dto.productId   = rs.getInt("product_id");
-                    dto.productName = rs.getString("name");
+                    dto.productId   = rs.getInt("productId");
+                    dto.variantId   = rs.getInt("variantId");
+                    dto.productName = rs.getString("productName");
                     dto.imageUrl    = rs.getString("imageUrl");
-                    dto.size        = rs.getString("size");
+                    dto.size        = rs.getInt("size");
                     dto.color       = rs.getString("color");
                     dto.quantity    = rs.getInt("quantity");
                     dto.price       = rs.getDouble("price");

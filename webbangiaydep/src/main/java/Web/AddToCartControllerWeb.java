@@ -1,91 +1,105 @@
-// package Web;
+package Web;
 
-// import business.AddToCart.*;
-// import persistence.AddToCart.AddToCartDAO;
-// import presenters.AddToCart.AddToCartPresenter;
-// import presenters.AddToCart.AddToCartViewModel;
-// import persistence.AddToCart.AddToCartGateway;
-// import jakarta.servlet.annotation.WebServlet;
-// import jakarta.servlet.http.*;
-// import java.io.IOException;
-// import java.io.PrintWriter;
+import business.AddToCart.*;
+import persistence.AddToCart.AddToCartDAO;
+import persistence.AddToCart.AddToCartDAOInterFace;
+import presenters.AddToCart.AddToCartPresenter;
+import presenters.AddToCart.AddToCartViewModel;
+import presenters.Reposity.AddToCartRepositoryImpl;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-// @WebServlet("/AddToCart")
-// public class AddToCartControllerWeb extends HttpServlet {
+@WebServlet("/AddToCart")
+public class AddToCartControllerWeb extends HttpServlet {
 
-//     private AddToCartUseCase addToCartUseCase;
+    private AddToCartUseCase addToCartUseCase;
 
-//     @Override
-//     public void init() {
-//         try {
-//             AddToCartGateway gateway = new AddToCartDAO();
-//             this.addToCartUseCase = new AddToCartUseCase(gateway);
-//         } catch (Exception e) {
-//             throw new RuntimeException("Lỗi khởi tạo AddToCart", e);
-//         }
-//     }
+    @Override
+    public void init() {
+        try {
+            AddToCartDAOInterFace dao = new AddToCartDAO();
+            AddToCartRepository repository = new AddToCartRepositoryImpl(dao);
+            this.addToCartUseCase = new AddToCartUseCase(repository);
+        } catch (Exception e) {
+            throw new RuntimeException("Lỗi khởi tạo AddToCart", e);
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+            throws IOException {
+        
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
 
-//     @Override
-//     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//         resp.setContentType("application/json");
-//         resp.setCharacterEncoding("UTF-8");
-//         PrintWriter out = resp.getWriter();
+        try {
+            // === 1. Lấy và validate tham số ===
+            String productIdStr = req.getParameter("productId");
+            String variantIdStr = req.getParameter("variantId");
+            String quantityStr = req.getParameter("quantity");
 
-//         try {
-//             String productIdStr = req.getParameter("productId");
-//             String variantIdStr = req.getParameter("variantId");
-//             String quantityStr = req.getParameter("quantity");
-//             String priceStr = req.getParameter("productPrice");
+            if (isEmpty(productIdStr)) { sendError(out, "Thiếu productId"); return; }
+            if (isEmpty(variantIdStr)) { sendError(out, "Thiếu variantId"); return; }
+            if (isEmpty(quantityStr)) { sendError(out, "Thiếu số lượng"); return; }
 
-//             if (isEmpty(productIdStr)) { sendError(out, "Thiếu productId"); return; }
-//             if (isEmpty(variantIdStr)) { sendError(out, "Thiếu variantId"); return; }
-//             if (isEmpty(quantityStr)) { sendError(out, "Thiếu số lượng"); return; }
-//             if (isEmpty(priceStr)) { sendError(out, "Thiếu giá sản phẩm"); return; }
+            int productId = Integer.parseInt(productIdStr.trim());
+            int variantId = Integer.parseInt(variantIdStr.trim());
+            int quantity = Integer.parseInt(quantityStr.trim());
 
-//             int productId = Integer.parseInt(productIdStr.trim());
-//             int variantId = Integer.parseInt(variantIdStr.trim());
-//             int quantity = Integer.parseInt(quantityStr.trim());
-//             double price = Double.parseDouble(priceStr.trim());
+            if (quantity <= 0) { sendError(out, "Số lượng phải > 0"); return; }
 
-//             if (productId <= 0) { sendError(out, "productId không hợp lệ"); return; }
-//             if (variantId <= 0) { sendError(out, "variantId không hợp lệ"); return; }
-//             if (quantity <= 0) { sendError(out, "Số lượng phải > 0"); return; }
+            // === 2. Lấy userId từ session ===
+            HttpSession session = req.getSession();
+            Object userIdObj = session.getAttribute("userId");
+            Long userId = null;
+            if (userIdObj instanceof Number) 
+            {
+                userId = ((Number) userIdObj).longValue();
+            }
+            // === 3. Tạo Input Data ===
+            AddToCartInputData input = new AddToCartInputData(userId, productId, variantId, quantity);
 
-//             HttpSession session = req.getSession();
-//             Integer userIdObj = (Integer) session.getAttribute("userId");
-//             int userId = (userIdObj != null) ? userIdObj : 0;
+            // === 4. Tạo Presenter + ViewModel riêng cho mỗi request (rất quan trọng!) ===
+            AddToCartViewModel viewModel = new AddToCartViewModel();
+            AddToCartPresenter presenter = new AddToCartPresenter(viewModel);
 
-//             AddToCartInputData input = new AddToCartInputData(userId, productId, variantId, quantity, price);
+            // === 5. Thực thi UseCase ===
+            addToCartUseCase.execute(input, presenter);
 
-//             AddToCartPresenter presenter = new AddToCartPresenter();
-//             addToCartUseCase.execute(input, presenter);
-//             AddToCartViewModel vm = presenter.getViewModel();
+            // === 6. Trả về JSON từ ViewModel ===
+            AddToCartViewModel vm = presenter.getViewModel();
 
-//             out.print("{");
-//             out.print("\"success\":" + vm.success + ",");
-//             out.print("\"message\":\"" + escapeJson(vm.message) + "\",");
-//             out.print("\"totalItems\":" + vm.totalItems);
-//             out.print("}");
-//             resp.setStatus(200);
-//             System.out.println("variantId nhận được: " + variantIdStr);
+            out.print("{");
+            out.print("\"success\":" + vm.success + ",");
+            out.print("\"message\":\"" + escapeJson(vm.message) + "\",");
+            out.print("\"totalItems\":" + vm.totalItems + ",");
+            out.print("\"totalPrice\":" + vm.totalPrice);
+            out.print("}");
+            resp.setStatus(200);
 
-//         } catch (NumberFormatException e) {
-//             sendError(out, "Dữ liệu số không hợp lệ");
-//         } catch (Exception e) {
-//             sendError(out, "Lỗi hệ thống: " + e.getMessage());
-//         }
-//     }
+        } catch (NumberFormatException e) {
+            sendError(out, "Dữ liệu không hợp lệ");
+        } catch (Exception e) {
+            sendError(out, "Lỗi hệ thống: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
-//     private void sendError(PrintWriter out, String message) {
-//         out.print("{\"success\":false,\"message\":\"" + escapeJson(message) + "\"}");
-//     }
+    private void sendError(PrintWriter out, String message) {
+        out.print("{\"success\":false,\"message\":\"" + escapeJson(message) + "\"}");
+    }
 
-//     private boolean isEmpty(String s) {
-//         return s == null || s.trim().isEmpty();
-//     }
+    private boolean isEmpty(String s) {
+        return s == null || s.trim().isEmpty();
+    }
 
-//     private String escapeJson(String str) {
-//         if (str == null) return "";
-//         return str.replace("\\", "\\\\").replace("\"", "\\\"");
-//     }
-// }
+    private String escapeJson(String str) {
+        if (str == null) return "";
+        return str.replace("\\", "\\\\")
+                  .replace("\"", "\\\"")
+                  .replace("\n", "\\n")
+                  .replace("\r", "\\r");
+    }
+}
