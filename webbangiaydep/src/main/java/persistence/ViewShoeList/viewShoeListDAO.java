@@ -15,22 +15,25 @@ public class viewShoeListDAO implements ViewShoeListDAOInterface {
         String password = "123456789";
         conn = DriverManager.getConnection(url, username, password);
     }
+
     @Override
     public List<ViewShoeListDTO> getAllShoes() throws SQLException {
         List<ViewShoeListDTO> listDTO = new ArrayList<>();
-        
+    
         String sql = """
             SELECT 
                 p.id, 
                 p.name, 
-                p.price, 
+                MIN(pv.price) AS price, 
                 p.imageUrl, 
                 p.brand, 
                 c.name AS category_name,
                 p.is_active
             FROM product p
             JOIN category c ON p.category_id = c.id
+            LEFT JOIN product_variant pv ON p.id = pv.product_id
             WHERE p.is_active = 1
+            GROUP BY p.id, p.name, p.imageUrl, p.brand, c.name, p.is_active
             ORDER BY p.id
             """;
 
@@ -39,9 +42,13 @@ public class viewShoeListDAO implements ViewShoeListDAOInterface {
 
             while (rs.next()) {
                 ViewShoeListDTO dto = new ViewShoeListDTO();
-                dto.id = rs.getInt("id");
+                dto.id = rs.getLong("id");
                 dto.name = rs.getString("name");
-                dto.price = rs.getDouble("price");
+                
+                // Lấy giá từ cột alias 'price' (kết quả của hàm MIN)
+                // Nếu sản phẩm chưa có variant nào thì giá có thể là 0 hoặc null, ta xử lý mặc định là 0
+                dto.price = rs.getDouble("price"); 
+                
                 dto.imageUrl = rs.getString("imageUrl");
                 dto.brand = rs.getString("brand");
                 dto.category = rs.getString("category_name");

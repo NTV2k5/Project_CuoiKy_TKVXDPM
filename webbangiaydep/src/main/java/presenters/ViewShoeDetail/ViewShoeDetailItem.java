@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ViewShoeDetailItem 
 {
-    public int id;
+    public Long id;
     public String name;
     public double price;
     public String imageUrl;
@@ -16,7 +16,7 @@ public class ViewShoeDetailItem
     public List<Variant> variants;
 
     public static class Variant {
-        public int variantId;
+        public Long variantId;
         public String size;
         public String color;
         public String hexCode;

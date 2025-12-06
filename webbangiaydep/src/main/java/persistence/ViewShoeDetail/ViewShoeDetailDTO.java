@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ViewShoeDetailDTO 
 {
-    public int id;
+    public Long id;
     public String name;
     public double price;
     public String description;
@@ -17,7 +17,7 @@ public class ViewShoeDetailDTO
 
     public static class Variant 
     {
-        public int variantId;
+        public Long variantId;
         public String size;
         public String color;
         public String hexCode;

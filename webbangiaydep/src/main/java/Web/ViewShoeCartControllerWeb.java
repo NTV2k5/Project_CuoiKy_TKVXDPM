@@ -57,7 +57,7 @@ public class ViewShoeCartControllerWeb extends HttpServlet {
         }
 
         // Nếu chưa đăng nhập → vẫn cho xem giỏ (có thể rỗng)
-        ViewShoeCartInputData inputData = new ViewShoeCartInputData(userId != null ? userId.intValue() : 0);
+        ViewShoeCartInputData inputData = new ViewShoeCartInputData(userId != null ? userId : 0L);
         // Hoặc tốt hơn: sửa InputData nhận Long → nhưng tạm thời giữ int như hiện tại
 
         viewShoeCartUseCase.execute(inputData);
@@ -66,6 +66,7 @@ public class ViewShoeCartControllerWeb extends HttpServlet {
 
         // Gửi dữ liệu sang JSP
         request.setAttribute("cartItems", viewModel.items);
+        session.setAttribute("cartItems", viewModel.items);
         // request.setAttribute("totalAmount", viewModel.getTotalAmount());
         request.setAttribute("message", viewModel.getMessage());
 

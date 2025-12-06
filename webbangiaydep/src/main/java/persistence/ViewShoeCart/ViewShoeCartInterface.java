@@ -4,5 +4,5 @@ package persistence.ViewShoeCart;
 import java.util.List;
 
 public interface ViewShoeCartInterface {
-    List<ViewShoeCartDTO> getCartItems(int userId);
+    List<ViewShoeCartDTO> getCartItems(Long userId);
 }

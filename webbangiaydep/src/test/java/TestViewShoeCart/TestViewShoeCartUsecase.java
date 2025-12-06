@@ -28,8 +28,8 @@ public class TestViewShoeCartUseCase {
     void testViewCartSuccess() throws Exception {
 
         ViewShoeCartDTO dto1 = new ViewShoeCartDTO();
-        dto1.productId = 1;
-        dto1.variantId = 10;
+        dto1.productId = 1L;
+        dto1.variantId = 10L;
         dto1.quantity = 2;
         dto1.price = 100.0;
         dto1.productName = "Nike Air";
@@ -38,8 +38,8 @@ public class TestViewShoeCartUseCase {
         dto1.size = 42;
 
         ViewShoeCartDTO dto2 = new ViewShoeCartDTO();
-        dto2.productId = 2;
-        dto2.variantId = 20;
+        dto2.productId = 2L;
+        dto2.variantId = 20L;
         dto2.quantity = 1;
         dto2.price = 200.0;
         dto2.productName = "Adidas Run";
@@ -50,9 +50,9 @@ public class TestViewShoeCartUseCase {
 
         List<ViewShoeCartDTO> mockData = Arrays.asList(dto1, dto2);
 
-        when(mockGateway.getCartItems(1)).thenReturn(mockData);
+        when(mockGateway.getCartItems(1L)).thenReturn(mockData);
 
-        ViewShoeCartInputData input = new ViewShoeCartInputData(1);
+        ViewShoeCartInputData input = new ViewShoeCartInputData(1L);
 
         usecase.execute(input);
 

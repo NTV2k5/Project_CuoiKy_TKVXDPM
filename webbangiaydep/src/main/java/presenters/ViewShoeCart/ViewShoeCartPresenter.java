@@ -18,18 +18,20 @@ public class ViewShoeCartPresenter implements ViewShoeCartOutputBoundary {
     @Override
     public void present(ViewShoeCartOutputData output) {
         List<ViewShoeCartItem> items = new ArrayList<>();
+        
 
         if (output.cartItems != null) {
             for (ViewShoeCartDTO dto : output.cartItems) {
                 ViewShoeCartItem item = new ViewShoeCartItem();
                 item.productId = dto.productId;
+                item.variantId = dto.variantId;
                 item.productName = dto.productName;
                 item.imageUrl = dto.imageUrl;
                 item.size = dto.size;
                 item.color = dto.color;
                 item.quantity = dto.quantity;
                 item.price = dto.price;
-                item.totalPrice = dto.price; 
+                item.totalPrice = dto.price * dto.quantity; 
                 items.add(item);
             }
         }

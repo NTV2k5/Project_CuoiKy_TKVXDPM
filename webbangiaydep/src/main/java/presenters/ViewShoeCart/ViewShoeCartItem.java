@@ -2,7 +2,8 @@
 package presenters.ViewShoeCart;
 
 public class ViewShoeCartItem {
-    public long productId;
+    public Long productId;
+    public Long variantId;
     public String productName;
     public String imageUrl;
     public int size;
@@ -11,7 +12,7 @@ public class ViewShoeCartItem {
     public double price;
     public double totalPrice;
 
-    public long getProductId() { return productId; }
+    public Long getProductId() { return productId; }
     public String getProductName() { return productName; }
     public String getImageUrl() { return imageUrl; }
     public int getSize() { return size; }
@@ -19,4 +20,10 @@ public class ViewShoeCartItem {
     public int getQuantity() { return quantity; }
     public double getPrice() { return price; }
     public double getTotalPrice() { return totalPrice; }
+    public Long getVariantId() { 
+        return variantId; 
+    }
+    public void setVariantId(Long variantId) { 
+        this.variantId = variantId; 
+    }
 }

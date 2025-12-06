@@ -38,12 +38,13 @@ public class ViewShoeCartUsecase implements ViewShoeCartInputBoundary {
 
                 ViewShoeCartDTO dto = new ViewShoeCartDTO();
                 dto.productId = item.getProductId();
+                dto.variantId = dtoOld.variantId;
                 dto.productName = dtoOld.productName;
                 dto.imageUrl = dtoOld.imageUrl;
                 dto.size = dtoOld.size;
                 dto.color = dtoOld.color;
                 dto.quantity = item.getQuantity();
-                dto.price = item.getTotalPrice();
+                dto.price = dtoOld.price;
                 outputDTO.add(dto);
             }
             double totalPrice = 0;

@@ -20,7 +20,7 @@ public class Cart {
     public List<CartItem> getItems() {return items;}
 
     //Thêm vào giỏ hàng (gộp nếu đã tồn tại)
-    public String addOrUpdateItem(int productId, int variantId, int quantity, double price) 
+    public String addOrUpdateItem(Long productId, Long variantId, int quantity, double price) 
     {
         CartItem existing = findItem(productId, variantId);
         if (existing != null) {
@@ -31,9 +31,9 @@ public class Cart {
         return null;
     }
     //Tìm sản phẩm trong giỏ theo variant
-    public CartItem findItem(int productId, int variantId) {
+    public CartItem findItem(Long productId, Long variantId) {
         for (CartItem item : items) {
-            if (item.getProductId() == productId && item.getVariantId() == variantId) 
+            if (item.getProductId().equals(productId) && item.getVariantId().equals(variantId)) 
             {
                 return item;
             }

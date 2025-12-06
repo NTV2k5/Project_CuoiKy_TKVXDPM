@@ -32,11 +32,11 @@ public class TestViewShoeListUseCase {
     public void testFilterAvailableShoes() throws SQLException, ClassNotFoundException {
         // Chuẩn bị dữ liệu DTO
         ViewShoeListDTO shoe1 = new ViewShoeListDTO();
-        shoe1.id = 1; shoe1.name = "Shoe1"; shoe1.brand = "Nike"; shoe1.imageUrl = "img1.jpg";
+        shoe1.id = 1L; shoe1.name = "Shoe1"; shoe1.brand = "Nike"; shoe1.imageUrl = "img1.jpg";
         shoe1.isActive = 1;
 
         ViewShoeListDTO shoe2 = new ViewShoeListDTO();
-        shoe2.id = 2; shoe2.name = "Shoe2"; shoe2.brand = "Adidas"; shoe2.imageUrl = "img2.jpg";
+        shoe2.id = 2L; shoe2.name = "Shoe2"; shoe2.brand = "Adidas"; shoe2.imageUrl = "img2.jpg";
         shoe2.isActive = 1; 
 
         when(dao.getAllShoes()).thenReturn(Arrays.asList(shoe1, shoe2));
@@ -56,15 +56,15 @@ public class TestViewShoeListUseCase {
     {
 
         ViewShoeListDTO shoe1 = new ViewShoeListDTO();
-        shoe1.id = 1; shoe1.name = "Old Shoe"; shoe1.isActive = 0;
+        shoe1.id = 1L; shoe1.name = "Old Shoe"; shoe1.isActive = 0;
 
         ViewShoeListDTO shoe2 = new ViewShoeListDTO();
-        shoe2.id = 2; shoe2.name = "Discontinued"; shoe2.isActive = 0;
+        shoe2.id = 2L; shoe2.name = "Discontinued"; shoe2.isActive = 0;
 
         when(dao.getAllShoes()).thenReturn(Arrays.asList(shoe1, shoe2));
 
         List<ViewShoeListDTO> result = usecase.execute();
 
-        assertTrue(result.isEmpty());  // Danh sách rỗng
+        assertTrue(result.isEmpty()); 
     }
 }

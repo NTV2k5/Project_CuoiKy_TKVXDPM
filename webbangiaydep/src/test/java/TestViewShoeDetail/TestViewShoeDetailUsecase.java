@@ -17,7 +17,7 @@ class TestViewShoeDetailUsecase {
             @Override
             public ViewShoeDetailDTO getShoeById(int id) {
                 ViewShoeDetailDTO dto = new ViewShoeDetailDTO();
-                dto.id = 100;
+                dto.id = 100L;
                 dto.name = "Nike Air Max 270";
                 dto.brand = "Nike";
                 dto.category = "Sneaker";
@@ -30,17 +30,17 @@ class TestViewShoeDetailUsecase {
 
                 // Variant 1: Hết hàng
                 ViewShoeDetailDTO.Variant v1 = new ViewShoeDetailDTO.Variant();
-                v1.variantId = 501;
+                v1.variantId = 501L;
                 v1.size = "40";
                 v1.color = "Black";
                 v1.hexCode = "#000000";
-                v1.stock = 2;
+                v1.stock = 0;
                 v1.price = 3500000;
                 dto.variants.add(v1);
 
                 // Variant 2: Còn hàng
                 ViewShoeDetailDTO.Variant v2 = new ViewShoeDetailDTO.Variant();
-                v2.variantId = 502;
+                v2.variantId = 502L;
                 v2.size = "42";
                 v2.color = "White/Red";
                 v2.hexCode = "#FFFFFF";
@@ -50,7 +50,7 @@ class TestViewShoeDetailUsecase {
 
                 // Variant 2: Còn hàng
                 ViewShoeDetailDTO.Variant v3 = new ViewShoeDetailDTO.Variant();
-                v3.variantId = 503;
+                v3.variantId = 503L;
                 v3.size = "43";
                 v3.color = "Grey";
                 v3.hexCode = "#808080";

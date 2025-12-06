@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import business.ViewShoeDetail.ViewShoeDetailRepository;
 import business.ViewShoeDetail.ViewShoeDetailUseCase;
-import presenters.Reposity.ViewShoeDetailRepositoryImpl;
+import presenters.Repository.ViewShoeDetailRepositoryImpl;
 import presenters.ViewShoeDetail.ViewShoeDetailPresenter;
 import presenters.ViewShoeDetail.ViewShoeDetailViewModel;
 

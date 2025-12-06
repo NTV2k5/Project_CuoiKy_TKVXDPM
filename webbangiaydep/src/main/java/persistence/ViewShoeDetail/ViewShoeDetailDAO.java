@@ -20,9 +20,10 @@ public class ViewShoeDetailDAO implements ViewShoeDetailInterface
 
     @Override
     public ViewShoeDetailDTO getShoeById(int shoeId) throws SQLException {
+        // SỬA SQL: Thay p.price bằng pv.price
         String sql = """
             SELECT 
-                p.id, p.name, p.price, p.description, p.imageUrl, p.brand,
+                p.id, p.name, pv.price, p.description, p.imageUrl, p.brand,
                 c.name AS category_name,
                 s.value AS size_value,
                 co.name AS color_name,
@@ -48,9 +49,11 @@ public class ViewShoeDetailDAO implements ViewShoeDetailInterface
                 while (rs.next()) {
                     if (dto == null) {
                         dto = new ViewShoeDetailDTO();
-                        dto.id = rs.getInt("id");
+                        dto.id = rs.getLong("id");
                         dto.name = rs.getString("name");
-                        dto.price = rs.getDouble("price");
+                        // Lấy giá từ pv.price (cột 'price' trong result set)
+                        // Đây sẽ là giá của biến thể đầu tiên tìm thấy
+                        dto.price = rs.getDouble("price"); 
                         dto.description = rs.getString("description");
                         dto.imageUrl = rs.getString("imageUrl");
                         dto.brand = rs.getString("brand");
@@ -59,11 +62,13 @@ public class ViewShoeDetailDAO implements ViewShoeDetailInterface
                     // Chỉ thêm nếu có variant
                     if (rs.getObject("size_value") != null) {
                         ViewShoeDetailDTO.Variant v = new ViewShoeDetailDTO.Variant();
-                        v.variantId = rs.getInt("variant_id");
+                        v.variantId = rs.getLong("variant_id");
                         v.size = rs.getString("size_value");
                         v.color = rs.getString("color_name");
                         v.hexCode = rs.getString("hex_code");
                         v.stock = rs.getInt("stock");
+                        // Thêm giá cho từng variant (quan trọng nếu các size/màu giá khác nhau)
+                        v.price = rs.getDouble("price"); 
                         variants.add(v);
                     }
                 }
