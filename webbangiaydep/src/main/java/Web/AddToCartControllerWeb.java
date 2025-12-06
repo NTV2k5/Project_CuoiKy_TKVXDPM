@@ -5,7 +5,7 @@ import persistence.AddToCart.AddToCartDAO;
 import persistence.AddToCart.AddToCartDAOInterFace;
 import presenters.AddToCart.AddToCartPresenter;
 import presenters.AddToCart.AddToCartViewModel;
-import presenters.Reposity.AddToCartRepositoryImpl;
+import presenters.Repository.AddToCartRepositoryImpl;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
@@ -44,8 +44,8 @@ public class AddToCartControllerWeb extends HttpServlet {
             if (isEmpty(variantIdStr)) { sendError(out, "Thiếu variantId"); return; }
             if (isEmpty(quantityStr)) { sendError(out, "Thiếu số lượng"); return; }
 
-            int productId = Integer.parseInt(productIdStr.trim());
-            int variantId = Integer.parseInt(variantIdStr.trim());
+            Long productId = Long.parseLong(productIdStr.trim()); 
+            Long variantId = Long.parseLong(variantIdStr.trim()); 
             int quantity = Integer.parseInt(quantityStr.trim());
 
             if (quantity <= 0) { sendError(out, "Số lượng phải > 0"); return; }

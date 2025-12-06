@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class OrderItem {
     private Long productId;
+    private Long VariantId;
     private String productName;
     private Integer quantity;
     private BigDecimal unitPrice;
@@ -21,7 +22,9 @@ public class OrderItem {
 
     public BigDecimal getUnitPrice() { return unitPrice; }
     public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
-
+    public Long getVariantId() {return VariantId;}
+    public void setVariantId(Long variantId) {VariantId = variantId;}
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,4 +37,5 @@ public class OrderItem {
     public int hashCode() {
         return Objects.hash(productId);
     }
+
 }

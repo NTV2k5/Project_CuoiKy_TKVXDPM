@@ -37,7 +37,7 @@ public class AddToCart
         if(userID == null)
         throw new IllegalArgumentException("Yêu Cầu Đăng nhập trước khi thêm vào giỏ hàng");
     }
-	public static void checkInputVariant(int variantID)
+	public static void checkInputVariant(Long variantID)
 	{
 		if(variantID < 0)
 		{

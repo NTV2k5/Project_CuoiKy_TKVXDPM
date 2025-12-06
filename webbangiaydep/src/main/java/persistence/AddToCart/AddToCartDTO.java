@@ -10,8 +10,8 @@ public class AddToCartDTO
 
     public static class CartItemDTO 
     {
-        public int productId;
-        public int variantId;
+        public Long productId;
+        public Long variantId;
         public int quantity;
         public double unitPrice;
 

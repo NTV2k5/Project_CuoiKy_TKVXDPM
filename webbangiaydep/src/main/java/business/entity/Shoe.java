@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Shoe 
 {
-    private  int id;
+    private  Long id;
     private  String name;
     private  String description;
     private  String imageUrl;
@@ -20,7 +20,7 @@ public class Shoe
         
     }
 
-    public Shoe(int id, String name, String description, String imageUrl,
+    public Shoe(Long id, String name, String description, String imageUrl,
                 String brand, String category, int isActive, List<ShoeVariant> variants) {
         this.id = id;
         this.name = name;
@@ -33,7 +33,7 @@ public class Shoe
     }
 
     // Getters
-    public int getId() { return id; }
+    public Long getId() { return id; }
     public String getName() { return name; }
     public String getDescription() { return description; }
     public String getImageUrl() { return imageUrl; }
@@ -43,7 +43,7 @@ public class Shoe
     public List<ShoeVariant> getVariants() { return new ArrayList<>(variants); }
     public double getPrice() {return price;}
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

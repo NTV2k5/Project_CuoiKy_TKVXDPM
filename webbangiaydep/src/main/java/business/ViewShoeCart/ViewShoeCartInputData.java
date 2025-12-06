@@ -1,8 +1,8 @@
 package business.ViewShoeCart;
 
 public class ViewShoeCartInputData {
-    public int userId;
-    public ViewShoeCartInputData(int userId) 
+    public Long userId;
+    public ViewShoeCartInputData(Long userId) 
     {
         this.userId = userId;
     }

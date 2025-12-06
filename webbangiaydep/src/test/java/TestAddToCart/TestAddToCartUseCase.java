@@ -32,18 +32,26 @@ public class TestAddToCartUseCase {
         }
 
         @Override
-        public CartItemDTO getVariantById(int variantId) {
-            if (variantId <= 0) throw new IllegalArgumentException("Variant ID không hợp lệ");
-            if (variantInDB == null || variantInDB.variantId != variantId)
+        public CartItemDTO getVariantById(Long variantId) {
+            if (variantId == null || variantId <= 0) throw new IllegalArgumentException("Variant ID không hợp lệ");
+            
+            // SỬA: SỬ DỤNG equals() ĐỂ SO SÁNH GIÁ TRỊ CỦA LONG OBJECTS
+            if (variantInDB == null || !variantInDB.variantId.equals(variantId))
                 throw new IllegalArgumentException("Sản phẩm không tồn tại");
+                
             return variantInDB;
+        }
+
+        @Override
+        public void removeCartItem(Long userId, Long productId, Long variantId) {
+            throw new UnsupportedOperationException("Unimplemented method 'removeCartItem'");
         }
     }
 
-    private CartItemDTO createVariant(int id, int stock, double price) {
+    private CartItemDTO createVariant(Long id, int stock, double price) {
         CartItemDTO dto = new CartItemDTO();
         dto.variantId = id;
-        dto.productId = 100;
+        dto.productId = 100L;
         dto.stock = stock;
         dto.unitPrice = price;
         return dto;
@@ -67,7 +75,7 @@ public class TestAddToCartUseCase {
         AddToCartRepository repo = new MockRepository(null, null);
 
         AddToCartUseCase useCase = new AddToCartUseCase(repo);
-        AddToCartInputData input = new AddToCartInputData(null, 100, 1, 1); // SỬA: null thay vì 0
+        AddToCartInputData input = new AddToCartInputData(null, 100L, 1L, 1);
 
         useCase.execute(input, presenter);
 
@@ -85,7 +93,7 @@ public class TestAddToCartUseCase {
         AddToCartRepository repo = new MockRepository(null, null);
 
         AddToCartUseCase useCase = new AddToCartUseCase(repo);
-        AddToCartInputData input = new AddToCartInputData(1L, 100, 1, 0); // SỬA: 1L
+        AddToCartInputData input = new AddToCartInputData(1L, 100L, 1L, 0); // SỬA: 1L
 
         useCase.execute(input, presenter);
 
@@ -101,11 +109,11 @@ public class TestAddToCartUseCase {
         AddToCartViewModel viewModel = new AddToCartViewModel();
         AddToCartPresenter presenter = new AddToCartPresenter(viewModel);
 
-        CartItemDTO variant = createVariant(1, 2, 1000000);
+        CartItemDTO variant = createVariant(1L, 2, 1000000);
         AddToCartRepository repo = new MockRepository(variant, null);
 
         AddToCartUseCase useCase = new AddToCartUseCase(repo);
-        AddToCartInputData input = new AddToCartInputData(1L, 100, 1, 5); // SỬA: 1L
+        AddToCartInputData input = new AddToCartInputData(1L, 100L, 1L, 5); // SỬA: 1L
 
         useCase.execute(input, presenter);
 
@@ -121,11 +129,11 @@ public class TestAddToCartUseCase {
         AddToCartViewModel viewModel = new AddToCartViewModel();
         AddToCartPresenter presenter = new AddToCartPresenter(viewModel);
 
-        CartItemDTO variant = createVariant(1, 10, 1000000);
+        CartItemDTO variant = createVariant(1L, 10, 1000000);
         MockRepository repo = new MockRepository(variant, null);
 
         AddToCartUseCase useCase = new AddToCartUseCase(repo);
-        AddToCartInputData input = new AddToCartInputData(1L, 100, 1, 2); // SỬA: 1L
+        AddToCartInputData input = new AddToCartInputData(1L, 100L, 1L, 2); // SỬA: 1L
 
         useCase.execute(input, presenter);
 
@@ -147,12 +155,12 @@ public class TestAddToCartUseCase {
         AddToCartViewModel viewModel = new AddToCartViewModel();
         AddToCartPresenter presenter = new AddToCartPresenter(viewModel);
 
-        CartItemDTO variant = createVariant(1, 10, 1000000);
+        CartItemDTO variant = createVariant(1L, 10, 1000000);
 
         ArrayList<CartItemDTO> items = new ArrayList<>();
         CartItemDTO existing = new CartItemDTO();
-        existing.productId = 100;
-        existing.variantId = 1;
+        existing.productId = 100L;
+        existing.variantId = 1L;
         existing.quantity = 3;
         existing.unitPrice = 1000000;
         items.add(existing);
@@ -161,7 +169,7 @@ public class TestAddToCartUseCase {
         MockRepository repo = new MockRepository(variant, existingCart);
 
         AddToCartUseCase useCase = new AddToCartUseCase(repo);
-        AddToCartInputData input = new AddToCartInputData(1L, 100, 1, 2); // SỬA: 1L
+        AddToCartInputData input = new AddToCartInputData(1L, 100L, 1L, 2); // SỬA: 1L
 
         useCase.execute(input, presenter);
 
@@ -181,12 +189,12 @@ public class TestAddToCartUseCase {
         AddToCartViewModel viewModel = new AddToCartViewModel();
         AddToCartPresenter presenter = new AddToCartPresenter(viewModel);
 
-        CartItemDTO variant2 = createVariant(2, 5, 1500000);
+        CartItemDTO variant2 = createVariant(2L, 5, 1500000);
 
         ArrayList<CartItemDTO> items = new ArrayList<>();
         CartItemDTO existing = new CartItemDTO();
-        existing.productId = 100;
-        existing.variantId = 1;
+        existing.productId = 100L;
+        existing.variantId = 1L;
         existing.quantity = 1;
         existing.unitPrice = 1000000;
         items.add(existing);
@@ -195,7 +203,7 @@ public class TestAddToCartUseCase {
         MockRepository repo = new MockRepository(variant2, cart);
 
         AddToCartUseCase useCase = new AddToCartUseCase(repo);
-        AddToCartInputData input = new AddToCartInputData(1L, 101, 2, 1);
+        AddToCartInputData input = new AddToCartInputData(1L, 101L, 2L, 1);
 
         useCase.execute(input, presenter);
 

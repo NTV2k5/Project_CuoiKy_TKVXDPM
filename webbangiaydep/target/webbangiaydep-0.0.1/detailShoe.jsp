@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%  
-    // LẤY DỮ LIỆU 1 LẦN DUY NHẤT – ĐÂY LÀ BIẾN CHÍNH!!!
     presenters.ViewShoeDetail.ViewShoeDetailItem shoeDetailItem = 
         (presenters.ViewShoeDetail.ViewShoeDetailItem) request.getAttribute("shoeDetail");
 %>
@@ -53,7 +53,7 @@
                                                    value="<%= v.size %>" 
                                                    <%= inStock ? "" : "disabled" %> />
                                             <%= v.size %>
-                                            <% if (!inStock) { %><span class="out">Hết</span><% } %>
+                                            <% if (!inStock) { %><span class="out">Hết Hàng</span><% } %>
                                         </label>
                             <%
                                     }

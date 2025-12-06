@@ -1,15 +1,15 @@
 package business.entity;
 
 public  class ShoeVariant {
-    private  int id;
-    private  int productId;
+    private  Long id;
+    private  Long productId;
     private  String size; 
     private  String color;     
     private  String hexCode;
     private  double price;
     private  int stock;
 
-    public ShoeVariant(int id, int productId, String size, String color, String hexCode, double price, int stock) {
+    public ShoeVariant(Long id, Long productId, String size, String color, String hexCode, double price, int stock) {
         this.id = id;
         this.productId = productId;
         this.size = size;
@@ -21,11 +21,11 @@ public  class ShoeVariant {
 
     // === Getters ===
     
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
